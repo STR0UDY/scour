@@ -1,0 +1,45 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "browser.chrome.sessions",
+  "name": "Chrome saved sessions",
+  "description": "The tabs and windows the browser would restore on next launch.",
+  "category": "Browsers",
+  "safety": "caution",
+  "defaultEnabled": false,
+  "elevation": false,
+  "detect": [
+    "%LOCALAPPDATA%\\Google\\Chrome\\User Data"
+  ],
+  "runningProcesses": [
+    "chrome.exe"
+  ],
+  "targets": [
+    {
+      "path": "%LOCALAPPDATA%\\Google\\Chrome\\User Data\\{chromiumProfile}\\Sessions",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Google\\Chrome\\User Data\\{chromiumProfile}",
+      "pattern": "Current Session",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Google\\Chrome\\User Data\\{chromiumProfile}",
+      "pattern": "Current Tabs",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Google\\Chrome\\User Data\\{chromiumProfile}",
+      "pattern": "Last Session",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Google\\Chrome\\User Data\\{chromiumProfile}",
+      "pattern": "Last Tabs",
+      "recurse": false
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

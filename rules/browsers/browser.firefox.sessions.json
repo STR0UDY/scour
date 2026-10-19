@@ -1,0 +1,30 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "browser.firefox.sessions",
+  "name": "Firefox saved sessions",
+  "description": "The tabs and windows Firefox would restore on next launch.",
+  "category": "Browsers",
+  "safety": "caution",
+  "defaultEnabled": false,
+  "elevation": false,
+  "detect": [
+    "%APPDATA%\\Mozilla\\Firefox"
+  ],
+  "runningProcesses": [
+    "firefox.exe"
+  ],
+  "targets": [
+    {
+      "path": "%APPDATA%\\Mozilla\\Firefox\\Profiles\\{firefoxProfile}",
+      "pattern": "sessionstore.jsonlz4",
+      "recurse": false
+    },
+    {
+      "path": "%APPDATA%\\Mozilla\\Firefox\\Profiles\\{firefoxProfile}\\sessionstore-backups",
+      "pattern": "*",
+      "recurse": true
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

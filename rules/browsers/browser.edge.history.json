@@ -1,0 +1,40 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "browser.edge.history",
+  "name": "Edge history",
+  "description": "Browsing history, visited-link colours and the new-tab shortcuts.",
+  "category": "Browsers",
+  "safety": "caution",
+  "defaultEnabled": false,
+  "elevation": false,
+  "detect": [
+    "%LOCALAPPDATA%\\Microsoft\\Edge\\User Data"
+  ],
+  "runningProcesses": [
+    "msedge.exe"
+  ],
+  "targets": [
+    {
+      "path": "%LOCALAPPDATA%\\Microsoft\\Edge\\User Data\\{chromiumProfile}",
+      "pattern": "History*",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Microsoft\\Edge\\User Data\\{chromiumProfile}",
+      "pattern": "Visited Links",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Microsoft\\Edge\\User Data\\{chromiumProfile}",
+      "pattern": "Top Sites*",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Microsoft\\Edge\\User Data\\{chromiumProfile}",
+      "pattern": "Shortcuts*",
+      "recurse": false
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

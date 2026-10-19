@@ -1,0 +1,55 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "app.vscode.cache",
+  "name": "VS Code cache",
+  "description": "Compiled-code caches from old versions, downloaded extension packages and logs. Settings and extensions are kept.",
+  "category": "Apps",
+  "safety": "safe",
+  "defaultEnabled": true,
+  "elevation": false,
+  "detect": [
+    "%APPDATA%\\Code"
+  ],
+  "runningProcesses": [
+    "Code.exe"
+  ],
+  "targets": [
+    {
+      "path": "%APPDATA%\\Code\\Cache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%APPDATA%\\Code\\Code Cache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%APPDATA%\\Code\\GPUCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%APPDATA%\\Code\\Service Worker\\CacheStorage",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%APPDATA%\\Code\\CachedData",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%APPDATA%\\Code\\CachedExtensionVSIXs",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%APPDATA%\\Code\\logs",
+      "pattern": "*",
+      "recurse": true
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 24
+}

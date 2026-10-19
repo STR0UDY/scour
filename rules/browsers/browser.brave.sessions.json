@@ -1,0 +1,45 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "browser.brave.sessions",
+  "name": "Brave saved sessions",
+  "description": "The tabs and windows the browser would restore on next launch.",
+  "category": "Browsers",
+  "safety": "caution",
+  "defaultEnabled": false,
+  "elevation": false,
+  "detect": [
+    "%LOCALAPPDATA%\\BraveSoftware\\Brave-Browser\\User Data"
+  ],
+  "runningProcesses": [
+    "brave.exe"
+  ],
+  "targets": [
+    {
+      "path": "%LOCALAPPDATA%\\BraveSoftware\\Brave-Browser\\User Data\\{chromiumProfile}\\Sessions",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\BraveSoftware\\Brave-Browser\\User Data\\{chromiumProfile}",
+      "pattern": "Current Session",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\BraveSoftware\\Brave-Browser\\User Data\\{chromiumProfile}",
+      "pattern": "Current Tabs",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\BraveSoftware\\Brave-Browser\\User Data\\{chromiumProfile}",
+      "pattern": "Last Session",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\BraveSoftware\\Brave-Browser\\User Data\\{chromiumProfile}",
+      "pattern": "Last Tabs",
+      "recurse": false
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

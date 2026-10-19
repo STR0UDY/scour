@@ -1,0 +1,23 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "system.windows-temp",
+  "name": "Windows temp files",
+  "description": "The system-wide temp folder. Anything touched in the last day is kept.",
+  "category": "System",
+  "safety": "safe",
+  "defaultEnabled": true,
+  "elevation": true,
+  "detect": [
+    "%WINDIR%\\Temp"
+  ],
+  "runningProcesses": [],
+  "targets": [
+    {
+      "path": "%WINDIR%\\Temp",
+      "pattern": "*",
+      "recurse": true
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 24
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "browser.brave.history",
+  "name": "Brave history",
+  "description": "Browsing history, visited-link colours and the new-tab shortcuts.",
+  "category": "Browsers",
+  "safety": "caution",
+  "defaultEnabled": false,
+  "elevation": false,
+  "detect": [
+    "%LOCALAPPDATA%\\BraveSoftware\\Brave-Browser\\User Data"
+  ],
+  "runningProcesses": [
+    "brave.exe"
+  ],
+  "targets": [
+    {
+      "path": "%LOCALAPPDATA%\\BraveSoftware\\Brave-Browser\\User Data\\{chromiumProfile}",
+      "pattern": "History*",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\BraveSoftware\\Brave-Browser\\User Data\\{chromiumProfile}",
+      "pattern": "Visited Links",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\BraveSoftware\\Brave-Browser\\User Data\\{chromiumProfile}",
+      "pattern": "Top Sites*",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\BraveSoftware\\Brave-Browser\\User Data\\{chromiumProfile}",
+      "pattern": "Shortcuts*",
+      "recurse": false
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

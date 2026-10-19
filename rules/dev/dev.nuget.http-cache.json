@@ -1,0 +1,28 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "dev.nuget.http-cache",
+  "name": "NuGet HTTP cache",
+  "description": "Cached package feed responses.",
+  "category": "Dev",
+  "safety": "safe",
+  "defaultEnabled": false,
+  "elevation": false,
+  "detect": [
+    "%LOCALAPPDATA%\\NuGet"
+  ],
+  "runningProcesses": [],
+  "targets": [
+    {
+      "path": "%LOCALAPPDATA%\\NuGet\\v3-cache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\NuGet\\plugins-cache",
+      "pattern": "*",
+      "recurse": true
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

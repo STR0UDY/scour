@@ -1,0 +1,23 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "dev.pip.cache",
+  "name": "pip cache",
+  "description": "Downloaded wheels and HTTP cache.",
+  "category": "Dev",
+  "safety": "safe",
+  "defaultEnabled": false,
+  "elevation": false,
+  "detect": [
+    "%LOCALAPPDATA%\\pip\\cache"
+  ],
+  "runningProcesses": [],
+  "targets": [
+    {
+      "path": "%LOCALAPPDATA%\\pip\\cache",
+      "pattern": "*",
+      "recurse": true
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/scour/scour/rules/rule.schema.json",
+  "title": "Scour cleaning rule",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "name", "category", "detect", "targets"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "id": {
+      "description": "Stable dotted id, used in settings, logs and the CLI. Must match the file name.",
+      "type": "string",
+      "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+    },
+    "name": { "type": "string", "minLength": 1 },
+    "description": { "type": "string" },
+    "category": { "enum": ["System", "Browsers", "Apps", "Games", "Dev"] },
+    "safety": {
+      "description": "safe: pure cache. caution: loses something the user may want (cookies, history). advanced: experts only.",
+      "enum": ["safe", "caution", "advanced"],
+      "default": "safe"
+    },
+    "defaultEnabled": { "type": "boolean", "default": false },
+    "elevation": {
+      "description": "Needs the admin helper (Windows folders, other users).",
+      "type": "boolean",
+      "default": false
+    },
+    "detect": {
+      "description": "The rule only shows if one of these paths exists.",
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/rootedPath" }
+    },
+    "runningProcesses": {
+      "description": "Image names that hold these files open. If running, Scour warns and offers to skip.",
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[^\\\\/]+\\.exe$" }
+    },
+    "targets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path"],
+        "properties": {
+          "path": { "$ref": "#/$defs/rootedPath" },
+          "pattern": {
+            "description": "File-name glob (* and ?), matched against each file's name.",
+            "type": "string",
+            "pattern": "^[^\\\\/]+$",
+            "default": "*"
+          },
+          "recurse": { "type": "boolean", "default": false }
+        }
+      }
+    },
+    "exclude": {
+      "description": "Full-path globs never touched, even inside a target. Start with an env var or *.",
+      "type": "array",
+      "items": { "type": "string", "pattern": "^(%[A-Za-z_][A-Za-z0-9_()]*%|\\*)" }
+    },
+    "minAgeHours": {
+      "description": "Skip files newer than this, so active temp files survive.",
+      "type": "number",
+      "minimum": 0,
+      "default": 0
+    }
+  },
+  "$defs": {
+    "rootedPath": {
+      "description": "Must start with an environment variable. May use {chromiumProfile}, {firefoxProfile} and * / ? in folder names.",
+      "type": "string",
+      "pattern": "^%[A-Za-z_][A-Za-z0-9_()]*%"
+    }
+  }
+}

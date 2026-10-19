@@ -1,0 +1,23 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "system.thumbnail-cache",
+  "name": "Thumbnail cache",
+  "description": "Explorer rebuilds thumbnails as you browse. Files Explorer holds open are skipped.",
+  "category": "System",
+  "safety": "safe",
+  "defaultEnabled": true,
+  "elevation": false,
+  "detect": [
+    "%LOCALAPPDATA%\\Microsoft\\Windows\\Explorer"
+  ],
+  "runningProcesses": [],
+  "targets": [
+    {
+      "path": "%LOCALAPPDATA%\\Microsoft\\Windows\\Explorer",
+      "pattern": "thumbcache_*.db",
+      "recurse": false
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

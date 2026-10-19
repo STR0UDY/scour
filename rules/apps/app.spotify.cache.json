@@ -1,0 +1,36 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "app.spotify.cache",
+  "name": "Spotify cache",
+  "description": "Streaming cache. Downloaded (offline) music is kept.",
+  "category": "Apps",
+  "safety": "safe",
+  "defaultEnabled": true,
+  "elevation": false,
+  "detect": [
+    "%LOCALAPPDATA%\\Spotify",
+    "%LOCALAPPDATA%\\Packages\\SpotifyAB.SpotifyMusic_zpdnekdrzrea0\\LocalCache\\Spotify"
+  ],
+  "runningProcesses": [
+    "Spotify.exe"
+  ],
+  "targets": [
+    {
+      "path": "%LOCALAPPDATA%\\Spotify\\Data",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Spotify\\Browser\\Cache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Packages\\SpotifyAB.SpotifyMusic_zpdnekdrzrea0\\LocalCache\\Spotify\\Data",
+      "pattern": "*",
+      "recurse": true
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

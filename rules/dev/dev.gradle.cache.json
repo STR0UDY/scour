@@ -1,0 +1,25 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "dev.gradle.cache",
+  "name": "Gradle caches",
+  "description": "Downloaded dependencies and build caches. The next build re-downloads what it needs.",
+  "category": "Dev",
+  "safety": "safe",
+  "defaultEnabled": false,
+  "elevation": false,
+  "detect": [
+    "%USERPROFILE%\\.gradle"
+  ],
+  "runningProcesses": [
+    "java.exe"
+  ],
+  "targets": [
+    {
+      "path": "%USERPROFILE%\\.gradle\\caches",
+      "pattern": "*",
+      "recurse": true
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "system.delivery-optimization",
+  "name": "Delivery Optimisation cache",
+  "description": "Update pieces Windows keeps to share with other PCs.",
+  "category": "System",
+  "safety": "safe",
+  "defaultEnabled": true,
+  "elevation": true,
+  "detect": [
+    "%WINDIR%\\SoftwareDistribution\\DeliveryOptimization",
+    "%WINDIR%\\ServiceProfiles\\NetworkService\\AppData\\Local\\Microsoft\\Windows\\DeliveryOptimization"
+  ],
+  "runningProcesses": [],
+  "targets": [
+    {
+      "path": "%WINDIR%\\SoftwareDistribution\\DeliveryOptimization",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%WINDIR%\\ServiceProfiles\\NetworkService\\AppData\\Local\\Microsoft\\Windows\\DeliveryOptimization\\Cache",
+      "pattern": "*",
+      "recurse": true
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 24
+}

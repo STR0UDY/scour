@@ -1,0 +1,61 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "browser.opera.cookies",
+  "name": "Opera cookies",
+  "description": "Signs you out of every website.",
+  "category": "Browsers",
+  "safety": "caution",
+  "defaultEnabled": false,
+  "elevation": false,
+  "detect": [
+    "%APPDATA%\\Opera Software\\Opera Stable",
+    "%LOCALAPPDATA%\\Opera Software\\Opera Stable"
+  ],
+  "runningProcesses": [
+    "opera.exe"
+  ],
+  "targets": [
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}\\Network",
+      "pattern": "Cookies*",
+      "recurse": false
+    },
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}",
+      "pattern": "Cookies*",
+      "recurse": false
+    },
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable\\Network",
+      "pattern": "Cookies*",
+      "recurse": false
+    },
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable",
+      "pattern": "Cookies*",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}\\Network",
+      "pattern": "Cookies*",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}",
+      "pattern": "Cookies*",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable\\Network",
+      "pattern": "Cookies*",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable",
+      "pattern": "Cookies*",
+      "recurse": false
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

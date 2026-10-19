@@ -1,0 +1,27 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "dev.nuget.packages",
+  "name": "NuGet global packages",
+  "description": "Every package version you've restored. The next build re-downloads what it needs.",
+  "category": "Dev",
+  "safety": "caution",
+  "defaultEnabled": false,
+  "elevation": false,
+  "detect": [
+    "%USERPROFILE%\\.nuget\\packages"
+  ],
+  "runningProcesses": [
+    "devenv.exe",
+    "dotnet.exe",
+    "MSBuild.exe"
+  ],
+  "targets": [
+    {
+      "path": "%USERPROFILE%\\.nuget\\packages",
+      "pattern": "*",
+      "recurse": true
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

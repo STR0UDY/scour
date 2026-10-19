@@ -1,0 +1,35 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "app.discord.cache",
+  "name": "Discord cache",
+  "description": "Cached images, scripts and media.",
+  "category": "Apps",
+  "safety": "safe",
+  "defaultEnabled": true,
+  "elevation": false,
+  "detect": [
+    "%APPDATA%\\discord"
+  ],
+  "runningProcesses": [
+    "Discord.exe"
+  ],
+  "targets": [
+    {
+      "path": "%APPDATA%\\discord\\Cache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%APPDATA%\\discord\\Code Cache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%APPDATA%\\discord\\GPUCache",
+      "pattern": "*",
+      "recurse": true
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

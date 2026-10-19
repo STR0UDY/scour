@@ -1,0 +1,42 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "game.steam.cache",
+  "name": "Steam web cache",
+  "description": "Store and library web cache. Games and shader caches are not touched.",
+  "category": "Games",
+  "safety": "safe",
+  "defaultEnabled": true,
+  "elevation": false,
+  "detect": [
+    "%ProgramFiles(x86)%\\Steam",
+    "%LOCALAPPDATA%\\Steam"
+  ],
+  "runningProcesses": [
+    "steam.exe",
+    "steamwebhelper.exe"
+  ],
+  "targets": [
+    {
+      "path": "%ProgramFiles(x86)%\\Steam\\appcache\\httpcache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Steam\\htmlcache\\Cache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Steam\\htmlcache\\Code Cache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Steam\\htmlcache\\GPUCache",
+      "pattern": "*",
+      "recurse": true
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

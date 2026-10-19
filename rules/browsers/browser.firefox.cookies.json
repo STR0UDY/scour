@@ -1,0 +1,25 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "browser.firefox.cookies",
+  "name": "Firefox cookies",
+  "description": "Signs you out of every website.",
+  "category": "Browsers",
+  "safety": "caution",
+  "defaultEnabled": false,
+  "elevation": false,
+  "detect": [
+    "%APPDATA%\\Mozilla\\Firefox"
+  ],
+  "runningProcesses": [
+    "firefox.exe"
+  ],
+  "targets": [
+    {
+      "path": "%APPDATA%\\Mozilla\\Firefox\\Profiles\\{firefoxProfile}",
+      "pattern": "cookies.sqlite*",
+      "recurse": false
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

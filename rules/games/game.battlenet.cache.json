@@ -1,0 +1,30 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "game.battlenet.cache",
+  "name": "Battle.net cache",
+  "description": "Launcher web cache.",
+  "category": "Games",
+  "safety": "safe",
+  "defaultEnabled": true,
+  "elevation": false,
+  "detect": [
+    "%LOCALAPPDATA%\\Battle.net"
+  ],
+  "runningProcesses": [
+    "Battle.net.exe"
+  ],
+  "targets": [
+    {
+      "path": "%LOCALAPPDATA%\\Battle.net\\Cache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Battle.net\\BrowserCaches",
+      "pattern": "*",
+      "recurse": true
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

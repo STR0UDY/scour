@@ -1,0 +1,43 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "gpu.amd-shader-cache",
+  "name": "AMD shader cache",
+  "description": "Compiled shaders from the AMD driver. Rebuilt on demand.",
+  "category": "System",
+  "safety": "safe",
+  "defaultEnabled": true,
+  "elevation": false,
+  "detect": [
+    "%LOCALAPPDATA%\\AMD"
+  ],
+  "runningProcesses": [],
+  "targets": [
+    {
+      "path": "%LOCALAPPDATA%\\AMD\\DxCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\AMD\\DxcCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\AMD\\GLCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\AMD\\VkCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\AMD\\OglCache",
+      "pattern": "*",
+      "recurse": true
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

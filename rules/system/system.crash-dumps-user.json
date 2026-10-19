@@ -1,0 +1,23 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "system.crash-dumps-user",
+  "name": "App crash dumps",
+  "description": "Memory dumps written when apps crash. Only useful if you're sending them to a developer.",
+  "category": "System",
+  "safety": "safe",
+  "defaultEnabled": true,
+  "elevation": false,
+  "detect": [
+    "%LOCALAPPDATA%\\CrashDumps"
+  ],
+  "runningProcesses": [],
+  "targets": [
+    {
+      "path": "%LOCALAPPDATA%\\CrashDumps",
+      "pattern": "*.dmp",
+      "recurse": true
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

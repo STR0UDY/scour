@@ -1,0 +1,30 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "browser.edge.cookies",
+  "name": "Edge cookies",
+  "description": "Signs you out of every website.",
+  "category": "Browsers",
+  "safety": "caution",
+  "defaultEnabled": false,
+  "elevation": false,
+  "detect": [
+    "%LOCALAPPDATA%\\Microsoft\\Edge\\User Data"
+  ],
+  "runningProcesses": [
+    "msedge.exe"
+  ],
+  "targets": [
+    {
+      "path": "%LOCALAPPDATA%\\Microsoft\\Edge\\User Data\\{chromiumProfile}\\Network",
+      "pattern": "Cookies*",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Microsoft\\Edge\\User Data\\{chromiumProfile}",
+      "pattern": "Cookies*",
+      "recurse": false
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

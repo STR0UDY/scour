@@ -1,0 +1,23 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "gpu.directx-shader-cache",
+  "name": "DirectX shader cache",
+  "description": "Compiled shaders. Games rebuild them, so the first launch afterwards may stutter briefly.",
+  "category": "System",
+  "safety": "safe",
+  "defaultEnabled": true,
+  "elevation": false,
+  "detect": [
+    "%LOCALAPPDATA%\\D3DSCache"
+  ],
+  "runningProcesses": [],
+  "targets": [
+    {
+      "path": "%LOCALAPPDATA%\\D3DSCache",
+      "pattern": "*",
+      "recurse": true
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

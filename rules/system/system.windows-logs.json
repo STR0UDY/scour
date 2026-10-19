@@ -1,0 +1,33 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "system.windows-logs",
+  "name": "Old Windows logs",
+  "description": "Setup, servicing and diagnostic logs older than a week.",
+  "category": "System",
+  "safety": "safe",
+  "defaultEnabled": true,
+  "elevation": true,
+  "detect": [
+    "%WINDIR%\\Logs"
+  ],
+  "runningProcesses": [],
+  "targets": [
+    {
+      "path": "%WINDIR%\\Logs",
+      "pattern": "*.log",
+      "recurse": true
+    },
+    {
+      "path": "%WINDIR%\\Logs",
+      "pattern": "*.etl",
+      "recurse": true
+    },
+    {
+      "path": "%WINDIR%\\Logs",
+      "pattern": "CbsPersist_*.cab",
+      "recurse": true
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 168
+}

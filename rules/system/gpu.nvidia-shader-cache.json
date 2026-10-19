@@ -1,0 +1,39 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "gpu.nvidia-shader-cache",
+  "name": "NVIDIA shader cache",
+  "description": "Compiled shaders from the NVIDIA driver. Rebuilt on demand.",
+  "category": "System",
+  "safety": "safe",
+  "defaultEnabled": true,
+  "elevation": false,
+  "detect": [
+    "%LOCALAPPDATA%\\NVIDIA",
+    "%USERPROFILE%\\AppData\\LocalLow\\NVIDIA"
+  ],
+  "runningProcesses": [],
+  "targets": [
+    {
+      "path": "%LOCALAPPDATA%\\NVIDIA\\DXCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\NVIDIA\\GLCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%USERPROFILE%\\AppData\\LocalLow\\NVIDIA\\PerDriverVersion\\DXCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%USERPROFILE%\\AppData\\LocalLow\\NVIDIA\\PerDriverVersion\\GLCache",
+      "pattern": "*",
+      "recurse": true
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

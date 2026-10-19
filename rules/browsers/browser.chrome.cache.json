@@ -1,0 +1,65 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "browser.chrome.cache",
+  "name": "Chrome cache",
+  "description": "Cached pages, scripts and images. Sites load a little slower the first time afterwards.",
+  "category": "Browsers",
+  "safety": "safe",
+  "defaultEnabled": true,
+  "elevation": false,
+  "detect": [
+    "%LOCALAPPDATA%\\Google\\Chrome\\User Data"
+  ],
+  "runningProcesses": [
+    "chrome.exe"
+  ],
+  "targets": [
+    {
+      "path": "%LOCALAPPDATA%\\Google\\Chrome\\User Data\\{chromiumProfile}\\Cache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Google\\Chrome\\User Data\\{chromiumProfile}\\Code Cache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Google\\Chrome\\User Data\\{chromiumProfile}\\GPUCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Google\\Chrome\\User Data\\{chromiumProfile}\\Service Worker\\CacheStorage",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Google\\Chrome\\User Data\\{chromiumProfile}\\DawnGraphiteCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Google\\Chrome\\User Data\\{chromiumProfile}\\DawnWebGPUCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Google\\Chrome\\User Data\\ShaderCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Google\\Chrome\\User Data\\GrShaderCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Google\\Chrome\\User Data\\GraphiteDawnCache",
+      "pattern": "*",
+      "recurse": true
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

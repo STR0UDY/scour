@@ -1,0 +1,23 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "system.windows-update-cache",
+  "name": "Windows Update download cache",
+  "description": "Update packages Windows has already downloaded. Re-downloaded if an update still needs them.",
+  "category": "System",
+  "safety": "safe",
+  "defaultEnabled": true,
+  "elevation": true,
+  "detect": [
+    "%WINDIR%\\SoftwareDistribution\\Download"
+  ],
+  "runningProcesses": [],
+  "targets": [
+    {
+      "path": "%WINDIR%\\SoftwareDistribution\\Download",
+      "pattern": "*",
+      "recurse": true
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 24
+}

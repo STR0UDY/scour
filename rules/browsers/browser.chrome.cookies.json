@@ -1,0 +1,30 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "browser.chrome.cookies",
+  "name": "Chrome cookies",
+  "description": "Signs you out of every website.",
+  "category": "Browsers",
+  "safety": "caution",
+  "defaultEnabled": false,
+  "elevation": false,
+  "detect": [
+    "%LOCALAPPDATA%\\Google\\Chrome\\User Data"
+  ],
+  "runningProcesses": [
+    "chrome.exe"
+  ],
+  "targets": [
+    {
+      "path": "%LOCALAPPDATA%\\Google\\Chrome\\User Data\\{chromiumProfile}\\Network",
+      "pattern": "Cookies*",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Google\\Chrome\\User Data\\{chromiumProfile}",
+      "pattern": "Cookies*",
+      "recurse": false
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

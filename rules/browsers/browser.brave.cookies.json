@@ -1,0 +1,30 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "browser.brave.cookies",
+  "name": "Brave cookies",
+  "description": "Signs you out of every website.",
+  "category": "Browsers",
+  "safety": "caution",
+  "defaultEnabled": false,
+  "elevation": false,
+  "detect": [
+    "%LOCALAPPDATA%\\BraveSoftware\\Brave-Browser\\User Data"
+  ],
+  "runningProcesses": [
+    "brave.exe"
+  ],
+  "targets": [
+    {
+      "path": "%LOCALAPPDATA%\\BraveSoftware\\Brave-Browser\\User Data\\{chromiumProfile}\\Network",
+      "pattern": "Cookies*",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\BraveSoftware\\Brave-Browser\\User Data\\{chromiumProfile}",
+      "pattern": "Cookies*",
+      "recurse": false
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

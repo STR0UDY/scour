@@ -1,0 +1,45 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "game.fivem.cache",
+  "name": "FiveM cache",
+  "description": "Downloaded server assets, crash dumps and logs. Servers re-download what they need; game files are kept.",
+  "category": "Games",
+  "safety": "safe",
+  "defaultEnabled": true,
+  "elevation": false,
+  "detect": [
+    "%LOCALAPPDATA%\\FiveM\\FiveM.app"
+  ],
+  "runningProcesses": [
+    "FiveM.exe"
+  ],
+  "targets": [
+    {
+      "path": "%LOCALAPPDATA%\\FiveM\\FiveM.app\\data\\cache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\FiveM\\FiveM.app\\data\\server-cache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\FiveM\\FiveM.app\\data\\server-cache-priv",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\FiveM\\FiveM.app\\crashes",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\FiveM\\FiveM.app\\logs",
+      "pattern": "*",
+      "recurse": true
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

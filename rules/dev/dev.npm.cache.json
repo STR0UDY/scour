@@ -1,0 +1,25 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "dev.npm.cache",
+  "name": "npm cache",
+  "description": "Downloaded packages. npm fetches them again when needed.",
+  "category": "Dev",
+  "safety": "safe",
+  "defaultEnabled": false,
+  "elevation": false,
+  "detect": [
+    "%LOCALAPPDATA%\\npm-cache"
+  ],
+  "runningProcesses": [
+    "node.exe"
+  ],
+  "targets": [
+    {
+      "path": "%LOCALAPPDATA%\\npm-cache\\_cacache",
+      "pattern": "*",
+      "recurse": true
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

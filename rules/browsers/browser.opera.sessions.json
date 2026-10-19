@@ -1,0 +1,121 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "browser.opera.sessions",
+  "name": "Opera saved sessions",
+  "description": "The tabs and windows the browser would restore on next launch.",
+  "category": "Browsers",
+  "safety": "caution",
+  "defaultEnabled": false,
+  "elevation": false,
+  "detect": [
+    "%APPDATA%\\Opera Software\\Opera Stable",
+    "%LOCALAPPDATA%\\Opera Software\\Opera Stable"
+  ],
+  "runningProcesses": [
+    "opera.exe"
+  ],
+  "targets": [
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}\\Sessions",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}",
+      "pattern": "Current Session",
+      "recurse": false
+    },
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}",
+      "pattern": "Current Tabs",
+      "recurse": false
+    },
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}",
+      "pattern": "Last Session",
+      "recurse": false
+    },
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}",
+      "pattern": "Last Tabs",
+      "recurse": false
+    },
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable\\Sessions",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable",
+      "pattern": "Current Session",
+      "recurse": false
+    },
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable",
+      "pattern": "Current Tabs",
+      "recurse": false
+    },
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable",
+      "pattern": "Last Session",
+      "recurse": false
+    },
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable",
+      "pattern": "Last Tabs",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}\\Sessions",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}",
+      "pattern": "Current Session",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}",
+      "pattern": "Current Tabs",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}",
+      "pattern": "Last Session",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}",
+      "pattern": "Last Tabs",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable\\Sessions",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable",
+      "pattern": "Current Session",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable",
+      "pattern": "Current Tabs",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable",
+      "pattern": "Last Session",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable",
+      "pattern": "Last Tabs",
+      "recurse": false
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

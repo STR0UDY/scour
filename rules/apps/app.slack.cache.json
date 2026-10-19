@@ -1,0 +1,61 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "app.slack.cache",
+  "name": "Slack cache",
+  "description": "Cached images, scripts and files.",
+  "category": "Apps",
+  "safety": "safe",
+  "defaultEnabled": true,
+  "elevation": false,
+  "detect": [
+    "%APPDATA%\\Slack",
+    "%LOCALAPPDATA%\\Packages\\91750D7E.Slack_8she8kybcnzg4\\LocalCache\\Roaming\\Slack"
+  ],
+  "runningProcesses": [
+    "slack.exe"
+  ],
+  "targets": [
+    {
+      "path": "%APPDATA%\\Slack\\Cache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%APPDATA%\\Slack\\Code Cache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%APPDATA%\\Slack\\GPUCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%APPDATA%\\Slack\\Service Worker\\CacheStorage",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Packages\\91750D7E.Slack_8she8kybcnzg4\\LocalCache\\Roaming\\Slack\\Cache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Packages\\91750D7E.Slack_8she8kybcnzg4\\LocalCache\\Roaming\\Slack\\Code Cache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Packages\\91750D7E.Slack_8she8kybcnzg4\\LocalCache\\Roaming\\Slack\\GPUCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Packages\\91750D7E.Slack_8she8kybcnzg4\\LocalCache\\Roaming\\Slack\\Service Worker\\CacheStorage",
+      "pattern": "*",
+      "recurse": true
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

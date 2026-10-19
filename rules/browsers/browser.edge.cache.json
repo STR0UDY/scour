@@ -1,0 +1,65 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "browser.edge.cache",
+  "name": "Edge cache",
+  "description": "Cached pages, scripts and images. Sites load a little slower the first time afterwards.",
+  "category": "Browsers",
+  "safety": "safe",
+  "defaultEnabled": true,
+  "elevation": false,
+  "detect": [
+    "%LOCALAPPDATA%\\Microsoft\\Edge\\User Data"
+  ],
+  "runningProcesses": [
+    "msedge.exe"
+  ],
+  "targets": [
+    {
+      "path": "%LOCALAPPDATA%\\Microsoft\\Edge\\User Data\\{chromiumProfile}\\Cache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Microsoft\\Edge\\User Data\\{chromiumProfile}\\Code Cache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Microsoft\\Edge\\User Data\\{chromiumProfile}\\GPUCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Microsoft\\Edge\\User Data\\{chromiumProfile}\\Service Worker\\CacheStorage",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Microsoft\\Edge\\User Data\\{chromiumProfile}\\DawnGraphiteCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Microsoft\\Edge\\User Data\\{chromiumProfile}\\DawnWebGPUCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Microsoft\\Edge\\User Data\\ShaderCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Microsoft\\Edge\\User Data\\GrShaderCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Microsoft\\Edge\\User Data\\GraphiteDawnCache",
+      "pattern": "*",
+      "recurse": true
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

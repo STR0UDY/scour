@@ -1,0 +1,45 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "browser.edge.sessions",
+  "name": "Edge saved sessions",
+  "description": "The tabs and windows the browser would restore on next launch.",
+  "category": "Browsers",
+  "safety": "caution",
+  "defaultEnabled": false,
+  "elevation": false,
+  "detect": [
+    "%LOCALAPPDATA%\\Microsoft\\Edge\\User Data"
+  ],
+  "runningProcesses": [
+    "msedge.exe"
+  ],
+  "targets": [
+    {
+      "path": "%LOCALAPPDATA%\\Microsoft\\Edge\\User Data\\{chromiumProfile}\\Sessions",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Microsoft\\Edge\\User Data\\{chromiumProfile}",
+      "pattern": "Current Session",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Microsoft\\Edge\\User Data\\{chromiumProfile}",
+      "pattern": "Current Tabs",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Microsoft\\Edge\\User Data\\{chromiumProfile}",
+      "pattern": "Last Session",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Microsoft\\Edge\\User Data\\{chromiumProfile}",
+      "pattern": "Last Tabs",
+      "recurse": false
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

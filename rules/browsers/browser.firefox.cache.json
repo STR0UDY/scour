@@ -1,0 +1,40 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "browser.firefox.cache",
+  "name": "Firefox cache",
+  "description": "Cached pages, scripts and images.",
+  "category": "Browsers",
+  "safety": "safe",
+  "defaultEnabled": true,
+  "elevation": false,
+  "detect": [
+    "%APPDATA%\\Mozilla\\Firefox"
+  ],
+  "runningProcesses": [
+    "firefox.exe"
+  ],
+  "targets": [
+    {
+      "path": "%LOCALAPPDATA%\\Mozilla\\Firefox\\Profiles\\{firefoxProfile}\\cache2",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Mozilla\\Firefox\\Profiles\\{firefoxProfile}\\startupCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Mozilla\\Firefox\\Profiles\\{firefoxProfile}\\thumbnails",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Mozilla\\Firefox\\Profiles\\{firefoxProfile}\\jumpListCache",
+      "pattern": "*",
+      "recurse": true
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

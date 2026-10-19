@@ -1,0 +1,29 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "system.crash-dumps-system",
+  "name": "System crash dumps",
+  "description": "Blue-screen dumps. Keep them if you're still diagnosing a crash.",
+  "category": "System",
+  "safety": "safe",
+  "defaultEnabled": true,
+  "elevation": true,
+  "detect": [
+    "%WINDIR%\\Minidump",
+    "%WINDIR%\\MEMORY.DMP"
+  ],
+  "runningProcesses": [],
+  "targets": [
+    {
+      "path": "%WINDIR%\\Minidump",
+      "pattern": "*.dmp",
+      "recurse": true
+    },
+    {
+      "path": "%WINDIR%",
+      "pattern": "MEMORY.DMP",
+      "recurse": false
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

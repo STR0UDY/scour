@@ -1,0 +1,62 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "app.teams.cache",
+  "name": "Microsoft Teams cache",
+  "description": "Cached web content for classic and new Teams.",
+  "category": "Apps",
+  "safety": "safe",
+  "defaultEnabled": true,
+  "elevation": false,
+  "detect": [
+    "%APPDATA%\\Microsoft\\Teams",
+    "%LOCALAPPDATA%\\Packages\\MSTeams_8wekyb3d8bbwe"
+  ],
+  "runningProcesses": [
+    "ms-teams.exe",
+    "Teams.exe"
+  ],
+  "targets": [
+    {
+      "path": "%APPDATA%\\Microsoft\\Teams\\Cache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%APPDATA%\\Microsoft\\Teams\\Code Cache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%APPDATA%\\Microsoft\\Teams\\GPUCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%APPDATA%\\Microsoft\\Teams\\Service Worker\\CacheStorage",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Packages\\MSTeams_8wekyb3d8bbwe\\LocalCache\\Microsoft\\MSTeams\\EBWebView\\*\\Cache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Packages\\MSTeams_8wekyb3d8bbwe\\LocalCache\\Microsoft\\MSTeams\\EBWebView\\*\\Code Cache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Packages\\MSTeams_8wekyb3d8bbwe\\LocalCache\\Microsoft\\MSTeams\\EBWebView\\*\\GPUCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Packages\\MSTeams_8wekyb3d8bbwe\\LocalCache\\Microsoft\\MSTeams\\EBWebView\\*\\Service Worker\\CacheStorage",
+      "pattern": "*",
+      "recurse": true
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

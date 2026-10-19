@@ -1,0 +1,30 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "game.epic.cache",
+  "name": "Epic Games Launcher cache",
+  "description": "Launcher web cache and logs.",
+  "category": "Games",
+  "safety": "safe",
+  "defaultEnabled": true,
+  "elevation": false,
+  "detect": [
+    "%LOCALAPPDATA%\\EpicGamesLauncher"
+  ],
+  "runningProcesses": [
+    "EpicGamesLauncher.exe"
+  ],
+  "targets": [
+    {
+      "path": "%LOCALAPPDATA%\\EpicGamesLauncher\\Saved\\webcache*",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\EpicGamesLauncher\\Saved\\Logs",
+      "pattern": "*.log",
+      "recurse": true
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

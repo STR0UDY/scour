@@ -1,0 +1,30 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "dev.cargo.cache",
+  "name": "Cargo registry cache",
+  "description": "Downloaded and extracted crates. Cargo fetches them again when needed.",
+  "category": "Dev",
+  "safety": "safe",
+  "defaultEnabled": false,
+  "elevation": false,
+  "detect": [
+    "%USERPROFILE%\\.cargo"
+  ],
+  "runningProcesses": [
+    "cargo.exe"
+  ],
+  "targets": [
+    {
+      "path": "%USERPROFILE%\\.cargo\\registry\\cache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%USERPROFILE%\\.cargo\\registry\\src",
+      "pattern": "*",
+      "recurse": true
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

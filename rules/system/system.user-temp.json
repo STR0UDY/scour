@@ -1,0 +1,23 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "system.user-temp",
+  "name": "User temp files",
+  "description": "Files apps left in your temp folder. Anything touched in the last day is kept.",
+  "category": "System",
+  "safety": "safe",
+  "defaultEnabled": true,
+  "elevation": false,
+  "detect": [
+    "%TEMP%"
+  ],
+  "runningProcesses": [],
+  "targets": [
+    {
+      "path": "%TEMP%",
+      "pattern": "*",
+      "recurse": true
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 24
+}

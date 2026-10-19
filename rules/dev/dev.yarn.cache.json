@@ -1,0 +1,23 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "dev.yarn.cache",
+  "name": "Yarn cache",
+  "description": "Downloaded packages. Yarn fetches them again when needed.",
+  "category": "Dev",
+  "safety": "safe",
+  "defaultEnabled": false,
+  "elevation": false,
+  "detect": [
+    "%LOCALAPPDATA%\\Yarn\\Cache"
+  ],
+  "runningProcesses": [],
+  "targets": [
+    {
+      "path": "%LOCALAPPDATA%\\Yarn\\Cache",
+      "pattern": "*",
+      "recurse": true
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

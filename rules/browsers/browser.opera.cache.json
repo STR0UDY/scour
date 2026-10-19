@@ -1,0 +1,171 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "browser.opera.cache",
+  "name": "Opera cache",
+  "description": "Cached pages, scripts and images. Sites load a little slower the first time afterwards.",
+  "category": "Browsers",
+  "safety": "safe",
+  "defaultEnabled": true,
+  "elevation": false,
+  "detect": [
+    "%APPDATA%\\Opera Software\\Opera Stable",
+    "%LOCALAPPDATA%\\Opera Software\\Opera Stable"
+  ],
+  "runningProcesses": [
+    "opera.exe"
+  ],
+  "targets": [
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}\\Cache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}\\Code Cache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}\\GPUCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}\\Service Worker\\CacheStorage",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}\\DawnGraphiteCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}\\DawnWebGPUCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable\\Cache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable\\Code Cache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable\\GPUCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable\\Service Worker\\CacheStorage",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable\\DawnGraphiteCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable\\DawnWebGPUCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable\\ShaderCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable\\GrShaderCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable\\GraphiteDawnCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}\\Cache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}\\Code Cache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}\\GPUCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}\\Service Worker\\CacheStorage",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}\\DawnGraphiteCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}\\DawnWebGPUCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable\\Cache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable\\Code Cache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable\\GPUCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable\\Service Worker\\CacheStorage",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable\\DawnGraphiteCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable\\DawnWebGPUCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable\\ShaderCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable\\GrShaderCache",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable\\GraphiteDawnCache",
+      "pattern": "*",
+      "recurse": true
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

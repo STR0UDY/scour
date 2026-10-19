@@ -1,0 +1,33 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "system.error-reports-system",
+  "name": "Windows Error Reporting (system)",
+  "description": "System-wide crash reports already sent, or queued to send, to Microsoft.",
+  "category": "System",
+  "safety": "safe",
+  "defaultEnabled": true,
+  "elevation": true,
+  "detect": [
+    "%ProgramData%\\Microsoft\\Windows\\WER"
+  ],
+  "runningProcesses": [],
+  "targets": [
+    {
+      "path": "%ProgramData%\\Microsoft\\Windows\\WER\\ReportArchive",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%ProgramData%\\Microsoft\\Windows\\WER\\ReportQueue",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%ProgramData%\\Microsoft\\Windows\\WER\\Temp",
+      "pattern": "*",
+      "recurse": true
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

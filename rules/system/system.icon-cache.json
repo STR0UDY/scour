@@ -1,0 +1,28 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "system.icon-cache",
+  "name": "Icon cache",
+  "description": "Rebuilt by Explorer. Icons may look blank until you sign out and back in.",
+  "category": "System",
+  "safety": "safe",
+  "defaultEnabled": true,
+  "elevation": false,
+  "detect": [
+    "%LOCALAPPDATA%\\Microsoft\\Windows\\Explorer"
+  ],
+  "runningProcesses": [],
+  "targets": [
+    {
+      "path": "%LOCALAPPDATA%\\Microsoft\\Windows\\Explorer",
+      "pattern": "iconcache_*.db",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%",
+      "pattern": "IconCache.db",
+      "recurse": false
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

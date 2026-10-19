@@ -1,0 +1,25 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "system.inet-cache",
+  "name": "Internet cache (legacy)",
+  "description": "Cache used by Internet Explorer mode and older embedded web views.",
+  "category": "System",
+  "safety": "safe",
+  "defaultEnabled": true,
+  "elevation": false,
+  "detect": [
+    "%LOCALAPPDATA%\\Microsoft\\Windows\\INetCache"
+  ],
+  "runningProcesses": [],
+  "targets": [
+    {
+      "path": "%LOCALAPPDATA%\\Microsoft\\Windows\\INetCache",
+      "pattern": "*",
+      "recurse": true
+    }
+  ],
+  "exclude": [
+    "*\\Content.Outlook\\*"
+  ],
+  "minAgeHours": 0
+}

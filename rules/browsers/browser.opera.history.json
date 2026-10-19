@@ -1,0 +1,101 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "browser.opera.history",
+  "name": "Opera history",
+  "description": "Browsing history, visited-link colours and the new-tab shortcuts.",
+  "category": "Browsers",
+  "safety": "caution",
+  "defaultEnabled": false,
+  "elevation": false,
+  "detect": [
+    "%APPDATA%\\Opera Software\\Opera Stable",
+    "%LOCALAPPDATA%\\Opera Software\\Opera Stable"
+  ],
+  "runningProcesses": [
+    "opera.exe"
+  ],
+  "targets": [
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}",
+      "pattern": "History*",
+      "recurse": false
+    },
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}",
+      "pattern": "Visited Links",
+      "recurse": false
+    },
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}",
+      "pattern": "Top Sites*",
+      "recurse": false
+    },
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}",
+      "pattern": "Shortcuts*",
+      "recurse": false
+    },
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable",
+      "pattern": "History*",
+      "recurse": false
+    },
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable",
+      "pattern": "Visited Links",
+      "recurse": false
+    },
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable",
+      "pattern": "Top Sites*",
+      "recurse": false
+    },
+    {
+      "path": "%APPDATA%\\Opera Software\\Opera Stable",
+      "pattern": "Shortcuts*",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}",
+      "pattern": "History*",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}",
+      "pattern": "Visited Links",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}",
+      "pattern": "Top Sites*",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable\\{chromiumProfile}",
+      "pattern": "Shortcuts*",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable",
+      "pattern": "History*",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable",
+      "pattern": "Visited Links",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable",
+      "pattern": "Top Sites*",
+      "recurse": false
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Opera Software\\Opera Stable",
+      "pattern": "Shortcuts*",
+      "recurse": false
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}

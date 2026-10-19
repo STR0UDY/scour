@@ -1,0 +1,33 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "system.error-reports-user",
+  "name": "Windows Error Reporting (user)",
+  "description": "Crash reports already sent, or queued to send, to Microsoft.",
+  "category": "System",
+  "safety": "safe",
+  "defaultEnabled": true,
+  "elevation": false,
+  "detect": [
+    "%LOCALAPPDATA%\\Microsoft\\Windows\\WER"
+  ],
+  "runningProcesses": [],
+  "targets": [
+    {
+      "path": "%LOCALAPPDATA%\\Microsoft\\Windows\\WER\\ReportArchive",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Microsoft\\Windows\\WER\\ReportQueue",
+      "pattern": "*",
+      "recurse": true
+    },
+    {
+      "path": "%LOCALAPPDATA%\\Microsoft\\Windows\\WER\\Temp",
+      "pattern": "*",
+      "recurse": true
+    }
+  ],
+  "exclude": [],
+  "minAgeHours": 0
+}
