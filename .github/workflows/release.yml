@@ -15,24 +15,39 @@ jobs:
       # Secrets can't appear in step conditions directly, so expose "is signing configured?".
       HAS_SIGNING: ${{ secrets.TRUSTED_SIGNING_METADATA != '' }}
     steps:
+      # A release published by hand (e.g. built and uploaded locally) is left alone.
+      - name: Skip if this tag already has a release
+        id: existing
+        shell: pwsh
+        run: |
+          gh release view "${{ github.ref_name }}" --repo "${{ github.repository }}" *> $null
+          "exists=$($LASTEXITCODE -eq 0)".ToLower() >> $env:GITHUB_OUTPUT
+          exit 0
+        env:
+          GH_TOKEN: ${{ github.token }}
+
       - uses: actions/checkout@v4
+        if: steps.existing.outputs.exists != 'true'
 
       - uses: actions/setup-dotnet@v4
+        if: steps.existing.outputs.exists != 'true'
         with:
           global-json-file: global.json
 
       - name: Check the tag matches the version
+        if: steps.existing.outputs.exists != 'true'
         shell: pwsh
         run: |
           $version = ([xml](Get-Content Directory.Build.props)).Project.PropertyGroup.Version | Where-Object { $_ } | Select-Object -First 1
           if ("v$version" -ne "${{ github.ref_name }}") { throw "Tag ${{ github.ref_name }} doesn't match Version $version in Directory.Build.props" }
 
       - name: Test
+        if: steps.existing.outputs.exists != 'true'
         run: dotnet test Scour.slnx -c Release
 
       # Unsigned builds work, but SmartScreen warns loudly about them; set these secrets to sign.
       - name: Set up signing
-        if: env.HAS_SIGNING == 'true'
+        if: steps.existing.outputs.exists != 'true' && env.HAS_SIGNING == 'true'
         shell: pwsh
         run: |
           '${{ secrets.TRUSTED_SIGNING_METADATA }}' | Set-Content "$env:RUNNER_TEMP/metadata.json"
@@ -46,6 +61,7 @@ jobs:
           AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
 
       - name: Build release
+        if: steps.existing.outputs.exists != 'true'
         shell: pwsh
         run: |
           $sign = [bool]$env:SCOUR_TRUSTED_SIGNING_METADATA
@@ -56,10 +72,12 @@ jobs:
           AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
 
       - name: Fill in winget manifests
+        if: steps.existing.outputs.exists != 'true'
         shell: pwsh
         run: ./packaging/winget/update-manifests.ps1 -Tag "${{ github.ref_name }}" -Repository "${{ github.repository }}"
 
       - name: Publish the release
+        if: steps.existing.outputs.exists != 'true'
         uses: softprops/action-gh-release@v2
         with:
           draft: true
@@ -70,6 +88,7 @@ jobs:
             artifacts/SHA256SUMS.txt
 
       - uses: actions/upload-artifact@v4
+        if: steps.existing.outputs.exists != 'true'
         with:
           name: winget-manifests
           path: packaging/winget/out
