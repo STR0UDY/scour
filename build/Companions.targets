@@ -1,0 +1,30 @@
+<Project>
+  <!--
+    Puts Scour.Elevator (and, for the app, the scour CLI) next to the executable that imports
+    this file, so the admin helper and scheduled cleans work from a plain build. Release builds
+    are assembled by build/publish.ps1 instead.
+  -->
+  <PropertyGroup>
+    <_ScourSrc>$(MSBuildThisFileDirectory)..\src\</_ScourSrc>
+  </PropertyGroup>
+
+  <!-- Not when publishing: publish.ps1 publishes the companions itself, for the right architecture. -->
+  <ItemGroup Condition="'$(_IsPublishing)' != 'true'">
+    <ProjectReference Include="$(_ScourSrc)Scour.Elevator\Scour.Elevator.csproj"
+                      ReferenceOutputAssembly="false" Private="false"
+                      GlobalPropertiesToRemove="RuntimeIdentifier;SelfContained" />
+    <ProjectReference Include="$(_ScourSrc)Scour.Cli\Scour.Cli.csproj" Condition="'$(ScourCopyCli)' == 'true'"
+                      ReferenceOutputAssembly="false" Private="false"
+                      GlobalPropertiesToRemove="RuntimeIdentifier;SelfContained" />
+  </ItemGroup>
+
+  <Target Name="CopyScourCompanions" AfterTargets="Build" Condition="'$(_IsPublishing)' != 'true'">
+    <ItemGroup>
+      <!-- bin\**\ covers both bin\Debug and bin\x64\Debug, depending on how the solution passed Platform. -->
+      <_ScourCompanion Include="$(_ScourSrc)Scour.Elevator\bin\**\$(Configuration)\$(TargetFramework)\Scour.Elevator.*" />
+      <_ScourCompanion Include="$(_ScourSrc)Scour.Cli\bin\**\$(Configuration)\$(TargetFramework)\scour.*;$(_ScourSrc)Scour.Cli\bin\**\$(Configuration)\$(TargetFramework)\System.CommandLine*.dll"
+                       Condition="'$(ScourCopyCli)' == 'true'" />
+    </ItemGroup>
+    <Copy SourceFiles="@(_ScourCompanion)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
+  </Target>
+</Project>

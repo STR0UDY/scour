@@ -1,7 +1,12 @@
 <Solution>
   <Folder Name="/src/">
+    <Project Path="src/Scour.App/Scour.App.csproj">
+      <Platform Project="x64" />
+    </Project>
     <Project Path="src/Scour.Cli/Scour.Cli.csproj" />
     <Project Path="src/Scour.Core/Scour.Core.csproj" />
+    <Project Path="src/Scour.Elevator/Scour.Elevator.csproj" />
+    <Project Path="src/Scour.Ipc/Scour.Ipc.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/Scour.Core.Tests/Scour.Core.Tests.csproj" />

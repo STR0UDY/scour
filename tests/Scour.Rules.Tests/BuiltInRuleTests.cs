@@ -83,7 +83,8 @@ public sealed class BuiltInRuleTests
         {
             var data = new TheoryData<string, string>();
             var trees = DenyList.ForCurrentSystem().Trees.Where(Directory.Exists).Take(6).ToList();
-            foreach (var rule in Loaded.Rules)
+            // Handler rules (Recycle Bin) don't use paths, so there is nothing to redirect.
+            foreach (var rule in Loaded.Rules.Where(r => r.Handler is null))
             foreach (var tree in trees)
                 data.Add(rule.Id, tree);
             return data;
@@ -117,7 +118,7 @@ public sealed class BuiltInRuleTests
     [MemberData(nameof(RuleIds))]
     public void Every_rule_is_refused_when_its_variables_resolve_to_a_drive_root(string id)
     {
-        var rule = Get(id) with { Detect = ["%ANY%"], Elevation = false };
+        var rule = Get(id) with { Detect = ["%ANY%"], Elevation = false, Handler = null };
         var drive = Path.GetPathRoot(Environment.SystemDirectory)!;
         var expander = new PathExpander(_ => drive);
         var scanner = new Scanner(expander, DenyList.ForCurrentSystem(), isElevated: false);

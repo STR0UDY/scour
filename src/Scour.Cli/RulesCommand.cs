@@ -1,4 +1,5 @@
 using System.CommandLine;
+using Scour.Core;
 using Scour.Core.Rules;
 
 namespace Scour.Cli;
@@ -11,8 +12,9 @@ internal static class RulesCommand
         var list = new Command("list", "List every loaded rule.") { json };
         list.SetAction(parse =>
         {
-            var dir = parse.GetValue(rulesDir) ?? RuleLoader.DefaultRulesDirectory;
-            var loaded = RuleLoader.LoadDirectory(dir);
+            var custom = parse.GetValue(rulesDir);
+            var dir = custom ?? RuleLoader.DefaultRulesDirectory;
+            var loaded = custom is null ? RuleLoader.LoadDirectories([dir, ScourPaths.UserRulesDirectory]) : RuleLoader.LoadDirectory(dir);
             if (parse.GetValue(json))
             {
                 Report.Write(loaded.Rules.Select(r => new { r.Id, r.Name, r.Category, r.Safety, r.DefaultEnabled, r.Elevation }));
@@ -53,6 +55,33 @@ internal static class RulesCommand
             return loaded.Issues.Count == 0 ? 0 : 1;
         });
 
-        return new Command("rules", "Inspect and validate cleaning rules.") { list, lint };
+        var iniPath = new Argument<string>("winapp2.ini") { Description = "Path to a winapp2.ini file." };
+        var import = new Command("import-winapp2", "Import community winapp2.ini rules (off by default, marked caution).") { iniPath };
+        import.SetAction(parse =>
+        {
+            var file = parse.GetValue(iniPath)!;
+            if (!File.Exists(file))
+            {
+                Format.Error($"{file} doesn't exist.");
+                return 2;
+            }
+            var result = Winapp2Importer.Import(Winapp2Importer.ReadFile(file));
+            Winapp2Importer.Save(result.Rules);
+            Console.WriteLine($"Imported {result.Rules.Count} of {result.Sections} entries into {Winapp2Importer.ImportDirectory}.");
+            if (result.Issues.Count > 0)
+                Console.WriteLine($"{result.Issues.Count} entries or paths were skipped (registry-only, unknown variables or unsafe paths).");
+            Console.WriteLine("Imported rules are off by default. Turn them on in the app, or pick them with --rule winapp2.*");
+            return 0;
+        });
+
+        var remove = new Command("remove-winapp2", "Remove the imported winapp2.ini rules.");
+        remove.SetAction(_ =>
+        {
+            Winapp2Importer.Remove();
+            Console.WriteLine("Removed the imported winapp2 rules.");
+            return 0;
+        });
+
+        return new Command("rules", "Inspect, validate and import cleaning rules.") { list, lint, import, remove };
     }
 }

@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- WinExe: no console window flashes up when it starts. -->
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Scour.Elevator</RootNamespace>
+    <AssemblyName>Scour.Elevator</AssemblyName>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Scour.Core\Scour.Core.csproj" />
+    <ProjectReference Include="..\Scour.Ipc\Scour.Ipc.csproj" />
+  </ItemGroup>
+
+</Project>

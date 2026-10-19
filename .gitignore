@@ -7,3 +7,5 @@ obj/
 TestResults/
 artifacts/
 publish/
+artifacts-build.log
+packaging/winget/out/

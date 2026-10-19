@@ -1,4 +1,5 @@
 using System.CommandLine;
+using Scour.Core;
 using Scour.Core.Scanning;
 
 namespace Scour.Cli;
@@ -29,7 +30,10 @@ internal static class ScanCommand
                 return 2;
 
             var asJson = parse.GetValue(json);
-            var results = await Run(r.Engine.Scanner, r.Rules, quiet: asJson, ct);
+            await using var service = new CleanService(r.Engine);
+            if (!await Elevation.PrepareAsync(service, r.Rules, parse.GetValue(selection.Elevate), ct))
+                return 1;
+            var results = await Run(service, r.Rules, quiet: asJson, ct);
 
             if (asJson)
                 Report.PrintJson(results, parse.GetValue(listFiles));
@@ -42,7 +46,7 @@ internal static class ScanCommand
 
     /// <summary>Scans with a one-line progress counter on stderr.</summary>
     public static async Task<IReadOnlyList<RuleScanResult>> Run(
-        Scanner scanner, IReadOnlyList<Core.Rules.Rule> rules, bool quiet, CancellationToken ct)
+        CleanService service, IReadOnlyList<Core.Rules.Rule> rules, bool quiet, CancellationToken ct)
     {
         var done = 0;
         var showProgress = !quiet && !Console.IsErrorRedirected;
@@ -53,7 +57,7 @@ internal static class ScanCommand
                 Console.Error.Write($"\rScanning {n}/{rules.Count} rules…");
         });
 
-        var results = await scanner.ScanAsync(rules, progress, ct);
+        var results = await service.ScanAsync(rules, progress, ct);
         if (showProgress)
             Console.Error.Write("\r" + new string(' ', 40) + "\r");
         return results;

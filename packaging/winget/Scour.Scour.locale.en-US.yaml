@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.defaultLocale.1.9.0.schema.json
+PackageIdentifier: Scour.Scour
+PackageVersion: {{VERSION}}
+PackageLocale: en-US
+Publisher: Scour contributors
+PublisherUrl: https://github.com/{{REPO}}
+PublisherSupportUrl: https://github.com/{{REPO}}/issues
+PackageName: Scour
+PackageUrl: https://github.com/{{REPO}}
+License: GPL-3.0-only
+LicenseUrl: https://github.com/{{REPO}}/blob/main/LICENSE
+ShortDescription: A free, open-source Windows cleaner that never deletes anything you haven't seen first.
+Description: |-
+  Scour reclaims disk space from temp files, caches and logs, shows where your space went with a
+  fast treemap, tidies what starts with Windows and uninstalls apps along with their leftovers.
+  No telemetry, no ads, no account and no background service. Every cleanable location is an
+  auditable JSON rule, and every clean is a preview first.
+Moniker: scour
+Tags:
+  - cleaner
+  - disk-cleanup
+  - disk-space
+  - treemap
+  - startup-manager
+  - uninstaller
+  - open-source
+ReleaseNotesUrl: https://github.com/{{REPO}}/releases/tag/v{{VERSION}}
+ManifestType: defaultLocale
+ManifestVersion: 1.9.0

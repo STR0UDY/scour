@@ -1,6 +1,8 @@
 using System.CommandLine;
+using Scour.Core;
 using Scour.Core.Cleaning;
 using Scour.Core.Scanning;
+using Scour.Core.Settings;
 
 namespace Scour.Cli;
 
@@ -10,13 +12,18 @@ internal static class CleanCommand
     {
         var selection = new SelectionOptions();
         var dryRun = new Option<bool>("--dry-run") { Description = "Scan and re-verify every file, but delete nothing." };
-        var recycle = new Option<bool>("--recycle") { Description = "Send files to the Recycle Bin instead of deleting them." };
+        var recycle = new Option<bool>("--recycle") { Description = "Send files to the Recycle Bin instead of deleting them (default: your app setting)." };
         var yes = new Option<bool>("--yes", "-y") { Description = "Don't ask for confirmation after the preview." };
         var ignoreRunning = new Option<bool>("--ignore-running")
         {
             Description = "Clean rules whose app is running anyway (files it holds open are skipped).",
         };
         var json = new Option<bool>("--json") { Description = "Print the result as JSON. Requires --yes or --dry-run." };
+        var scheduled = new Option<bool>("--scheduled")
+        {
+            Description = "Used by the Task Scheduler entry: quiet, skips running apps, records the result for the app.",
+            Hidden = true,
+        };
 
         var command = new Command("clean", "Scan, show the preview, then delete what was shown.");
         selection.AddTo(command);
@@ -25,6 +32,7 @@ internal static class CleanCommand
         command.Options.Add(yes);
         command.Options.Add(ignoreRunning);
         command.Options.Add(json);
+        command.Options.Add(scheduled);
 
         command.SetAction(async (parse, ct) =>
         {
@@ -33,16 +41,22 @@ internal static class CleanCommand
                 return 2;
 
             var isDryRun = parse.GetValue(dryRun);
+            var isScheduled = parse.GetValue(scheduled);
             var asJson = parse.GetValue(json);
+            var quiet = asJson || isScheduled;
             if (asJson && !isDryRun && !parse.GetValue(yes))
             {
                 Format.Error("--json can't prompt for confirmation; add --yes or --dry-run.");
                 return 2;
             }
 
+            await using var service = new CleanService(r.Engine);
+            if (!await Elevation.PrepareAsync(service, r.Rules, parse.GetValue(selection.Elevate), ct))
+                return 1;
+
             // 1-4: expand, enumerate, deny-list, show.
-            var results = await ScanCommand.Run(r.Engine.Scanner, r.Rules, quiet: asJson, ct);
-            if (!asJson)
+            var results = await ScanCommand.Run(service, r.Rules, quiet, ct);
+            if (!quiet)
                 Report.PrintTable(results, largest: 0);
 
             var toClean = results.Where(x => x.Status == RuleScanStatus.Ok && x.FileCount > 0).ToList();
@@ -50,7 +64,8 @@ internal static class CleanCommand
             {
                 foreach (var busy in toClean.Where(x => x.RunningProcesses.Count > 0).ToList())
                 {
-                    Format.Warn($"Skipping {busy.Rule.Name}: {string.Join(", ", busy.RunningProcesses)} is running. Close it, or pass --ignore-running.");
+                    if (!quiet)
+                        Format.Warn($"Skipping {busy.Rule.Name}: {string.Join(", ", busy.RunningProcesses)} is running. Close it, or pass --ignore-running.");
                     toClean.Remove(busy);
                 }
             }
@@ -59,32 +74,49 @@ internal static class CleanCommand
             {
                 if (asJson)
                     Report.Write(new { dryRun = isDryRun, bytesFreed = 0, filesFreed = 0 });
-                else
+                else if (!quiet)
                     Console.WriteLine("Nothing to clean.");
                 return 0;
             }
 
+            var useRecycleBin = parse.GetValue(recycle) || r.Engine.Settings.UseRecycleBin;
             var bytes = toClean.Sum(x => x.TotalBytes);
             var files = toClean.Sum(x => x.FileCount);
-            if (!isDryRun && !parse.GetValue(yes) && !Confirm(bytes, files, parse.GetValue(recycle)))
+            if (!isDryRun && !parse.GetValue(yes) && !Confirm(bytes, files, useRecycleBin))
             {
                 Console.WriteLine("Cancelled. Nothing was deleted.");
                 return 1;
             }
 
             // 5-7: re-check, delete, log.
-            var options = new CleanOptions { DryRun = isDryRun, UseRecycleBin = parse.GetValue(recycle) };
-            using var log = isDryRun ? null : FileDeletionLog.Create();
-            var summary = r.Engine.Cleaner.Clean(toClean, options, log, cancellationToken: ct);
+            var options = new CleanOptions { DryRun = isDryRun, UseRecycleBin = useRecycleBin };
+            var summary = await service.CleanAsync(toClean, options, cancellationToken: ct);
 
+            if (!isDryRun)
+                RecordLastClean(summary);
             if (asJson)
                 PrintJson(summary, isDryRun);
-            else
+            else if (!quiet)
                 PrintSummary(summary, isDryRun);
             // A dry run only predicts failures; it doesn't fail.
             return summary.Failed > 0 && !isDryRun ? 1 : 0;
         });
         return command;
+    }
+
+    /// <summary>So the app's Home page can show what the last clean (scheduled or not) did.</summary>
+    private static void RecordLastClean(CleanSummary summary)
+    {
+        try
+        {
+            var store = new SettingsStore();
+            var settings = store.Load();
+            settings.LastClean = new LastCleanInfo(DateTimeOffset.Now, summary.BytesFreed, summary.FilesFreed, summary.Locked, summary.LogPath);
+            store.Save(settings);
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+        }
     }
 
     private static bool Confirm(long bytes, int files, bool recycle)

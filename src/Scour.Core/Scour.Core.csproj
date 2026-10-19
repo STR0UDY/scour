@@ -2,11 +2,19 @@
 
   <PropertyGroup>
     <RootNamespace>Scour.Core</RootNamespace>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.ServiceProcess.ServiceController" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Scour.Ipc\Scour.Ipc.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <InternalsVisibleTo Include="Scour.Core.Tests" />
+    <InternalsVisibleTo Include="Scour.Elevator" />
   </ItemGroup>
 
 </Project>

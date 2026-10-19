@@ -15,6 +15,8 @@
     <ProjectReference Include="..\Scour.Core\Scour.Core.csproj" />
   </ItemGroup>
 
+  <Import Project="..\..\build\Companions.targets" />
+
   <ItemGroup>
     <Content Include="..\..\rules\**\*.json" Link="rules\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>

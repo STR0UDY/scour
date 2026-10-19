@@ -1,0 +1,19 @@
+<Project Sdk="WixToolset.Sdk/5.0.2">
+  <!--
+    Builds the MSI from a folder produced by build/publish.ps1:
+      dotnet build installer/Scour.Installer.wixproj -p:Platform=x64 -p:PublishDir=<folder>\ -p:ProductVersion=1.0.0
+  -->
+  <PropertyGroup>
+    <OutputName Condition="'$(OutputName)' == ''">Scour</OutputName>
+    <ProductVersion Condition="'$(ProductVersion)' == ''">1.0.0</ProductVersion>
+    <InstallerPlatform Condition="'$(Platform)' == 'ARM64'">arm64</InstallerPlatform>
+    <InstallerPlatform Condition="'$(InstallerPlatform)' == ''">x64</InstallerPlatform>
+    <DefineConstants>PublishDir=$(PublishDir);ProductVersion=$(ProductVersion)</DefineConstants>
+    <SuppressValidation>false</SuppressValidation>
+    <!-- ICE38/43/57: the classic false positives for a Start menu shortcut in a per-machine package.
+         ICE03: Windows App SDK DLLs declare multi-language version info the File table can't hold. -->
+    <SuppressIces>ICE03;ICE38;ICE43;ICE57</SuppressIces>
+    <!-- Central package management doesn't apply to the WiX SDK project. -->
+    <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+</Project>

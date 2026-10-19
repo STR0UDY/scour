@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scour: a Windows cleaner you can trust</title>
+  <meta name="description" content="Free, open-source Windows cleaner. Reclaims disk space, shows where it went, tidies startup, and never deletes anything you haven't seen first.">
+  <link rel="icon" href="assets/icon.png">
+  <style>
+    :root {
+      --bg: #f7f8f8; --fg: #12191a; --muted: #55625f; --card: #ffffff; --line: #dde3e1;
+      --accent: #0d9488; --accent-fg: #ffffff;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #0f1413; --fg: #e8eeec; --muted: #9aa8a4; --card: #171e1d; --line: #26302e; --accent: #2dd4bf; --accent-fg: #062b27; }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.6 "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif; }
+    main { max-width: 960px; margin: 0 auto; padding: 0 16px 64px; }
+    header { text-align: center; padding: 72px 0 40px; }
+    header img { width: 88px; height: 88px; }
+    h1 { font: 600 44px/1.15 "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif; margin: 16px 0 12px; }
+    .lede { font-size: 20px; color: var(--muted); max-width: 640px; margin: 0 auto 28px; }
+    .actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .button { display: inline-block; padding: 11px 22px; border-radius: 8px; text-decoration: none; font-weight: 600; border: 1px solid var(--line); color: var(--fg); background: var(--card); }
+    .button.primary { background: var(--accent); color: var(--accent-fg); border-color: transparent; }
+    code { font: 15px "Cascadia Mono", Consolas, monospace; background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 2px 6px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin: 40px 0; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 20px 22px; }
+    .card h3 { margin: 0 0 6px; font-size: 18px; }
+    .card p { margin: 0; color: var(--muted); }
+    h2 { font-size: 26px; margin: 56px 0 12px; }
+    ul.plain { padding-left: 20px; color: var(--muted); }
+    ul.plain li { margin: 6px 0; }
+    ul.plain strong { color: var(--fg); }
+    footer { color: var(--muted); font-size: 14px; text-align: center; padding-top: 40px; border-top: 1px solid var(--line); margin-top: 56px; }
+    footer a { color: inherit; }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <img src="assets/icon.png" alt="">
+    <h1>Scour</h1>
+    <p class="lede">The Windows cleaner CCleaner used to be, minus the bloat. It frees disk space, shows where the space went and tidies startup, and it never deletes anything you haven't seen first.</p>
+    <div class="actions">
+      <a class="button primary" href="https://github.com/Mat2k/scour/releases/latest">Download for Windows</a>
+      <a class="button" href="https://github.com/Mat2k/scour">Source on GitHub</a>
+    </div>
+    <p style="margin-top:18px;color:var(--muted)">or <code>winget install Scour.Scour</code></p>
+  </header>
+
+  <section class="grid">
+    <div class="card"><h3>Clean</h3><p>Temp files, update caches, crash dumps, logs, GPU shader caches, browser and app caches, and the Recycle Bin. Every item shows exactly which files it would remove.</p></div>
+    <div class="card"><h3>Analyse</h3><p>A treemap of any drive, read straight from the NTFS file table in seconds. Drill in, sort, break it down by file type.</p></div>
+    <div class="card"><h3>Startup</h3><p>Apps, scheduled tasks and services that start with Windows, with verified publishers. Switch them off reversibly, the way Task Manager does.</p></div>
+    <div class="card"><h3>Apps</h3><p>Uninstall with the app's own uninstaller, then see what it left behind before anything is removed.</p></div>
+  </section>
+
+  <h2>Boring, on purpose</h2>
+  <ul class="plain">
+    <li><strong>Preview before delete.</strong> No blind one-click wipe. You see paths and sizes first.</li>
+    <li><strong>Nothing hidden.</strong> No telemetry, no ads, no account, no background service. Update checks are opt-in.</li>
+    <li><strong>Rules are data.</strong> Every cleanable location is a small JSON file anyone can read, audit and improve.</li>
+    <li><strong>Safe by default.</strong> Cookies, history, sessions and the Recycle Bin stay off until you tick them. System folders and your documents are on a deny-list no rule can override.</li>
+    <li><strong>Least privilege.</strong> Scour runs as you. A tiny helper asks for admin only when you tick something that needs it.</li>
+  </ul>
+
+  <h2>What it won't do</h2>
+  <p style="color:var(--muted)">No registry cleaner, no RAM "optimiser", no driver updater, no "PC health" score. They don't make Windows measurably faster, and some of them break it.</p>
+
+  <footer>
+    Scour is free software under the <a href="https://github.com/Mat2k/scour/blob/main/LICENSE">GPL-3.0</a>.
+    · <a href="https://github.com/Mat2k/scour/blob/main/SECURITY.md">Security</a>
+    · <a href="https://github.com/Mat2k/scour/blob/main/CONTRIBUTING.md">Contribute a rule</a>
+  </footer>
+</main>
+</body>
+</html>

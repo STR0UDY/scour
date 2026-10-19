@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Scour's installer. Per-machine, into Program Files, so the folder the admin helper loads its
+  rules from is only writable by administrators. Adds a Start menu shortcut and puts the folder
+  on PATH so `scour` works in any terminal. No services, no scheduled tasks, no telemetry.
+-->
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package Name="Scour"
+           Manufacturer="Scour contributors"
+           Version="$(var.ProductVersion)"
+           UpgradeCode="{6B1E3F2A-9C4D-4E8B-A7F1-2D5C8E9B4A30}"
+           Scope="perMachine"
+           Compressed="yes">
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of Scour is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <Icon Id="ScourIcon" SourceFile="..\src\Scour.App\Assets\scour.ico" />
+    <Property Id="ARPPRODUCTICON" Value="ScourIcon" />
+    <Property Id="ARPURLINFOABOUT" Value="https://github.com/Mat2k/scour" />
+    <Property Id="ARPCOMMENTS" Value="Free, open-source Windows cleaner. Nothing is deleted that you haven't seen first." />
+
+    <StandardDirectory Id="ProgramFiles6432Folder">
+      <Directory Id="INSTALLFOLDER" Name="Scour">
+        <Files Include="$(var.PublishDir)**" />
+
+        <Component Id="PathEntry" Guid="{3C2F8D41-7B6E-4A95-8E0D-1F4B7A2C9D63}">
+          <Environment Id="ScourOnPath" Name="PATH" Value="[INSTALLFOLDER]" Part="last" Action="set" System="yes" Permanent="no" />
+          <RegistryValue Root="HKLM" Key="Software\Scour" Name="InstallDir" Type="string" Value="[INSTALLFOLDER]" KeyPath="yes" />
+        </Component>
+      </Directory>
+    </StandardDirectory>
+
+    <StandardDirectory Id="ProgramMenuFolder">
+      <Component Id="StartMenuShortcut" Guid="{9A4D6E28-1F3B-4C7A-B5E9-6D8F2A1C3B74}">
+        <Shortcut Id="ScourShortcut"
+                  Name="Scour"
+                  Description="Clean up disk space, see where it went, tidy startup."
+                  Target="[INSTALLFOLDER]ScourApp.exe"
+                  WorkingDirectory="INSTALLFOLDER"
+                  Icon="ScourIcon" />
+        <RegistryValue Root="HKLM" Key="Software\Scour" Name="StartMenuShortcut" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </StandardDirectory>
+  </Package>
+</Wix>

@@ -61,6 +61,12 @@ public sealed record Rule
 
     public IReadOnlyList<RuleTarget> Targets { get; init; } = [];
 
+    /// <summary>
+    /// A built-in handler for locations a path rule can't describe, e.g. <c>recycleBin</c>
+    /// (pairs <c>$I</c>/<c>$R</c> files and ages them by deletion time). Targets may then be empty.
+    /// </summary>
+    public string? Handler { get; init; }
+
     /// <summary>Full-path globs that are never touched, even inside a target.</summary>
     public IReadOnlyList<string> Exclude { get; init; } = [];
 
@@ -70,6 +76,13 @@ public sealed record Rule
     /// <summary>File the rule was loaded from; not part of the JSON.</summary>
     [JsonIgnore]
     public string? SourceFile { get; init; }
+}
+
+public static class RuleHandlers
+{
+    public const string RecycleBin = "recycleBin";
+
+    public static readonly IReadOnlyList<string> All = [RecycleBin];
 }
 
 public static class RuleCategories

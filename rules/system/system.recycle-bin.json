@@ -1,0 +1,18 @@
+{
+  "$schema": "../rule.schema.json",
+  "id": "system.recycle-bin",
+  "name": "Recycle Bin",
+  "description": "Permanently removes what's in your Recycle Bin on every drive. Settings can limit it to items deleted more than N days ago.",
+  "category": "System",
+  "safety": "caution",
+  "defaultEnabled": false,
+  "elevation": false,
+  "detect": [
+    "%SystemDrive%\\$Recycle.Bin"
+  ],
+  "runningProcesses": [],
+  "targets": [],
+  "handler": "recycleBin",
+  "exclude": [],
+  "minAgeHours": 0
+}

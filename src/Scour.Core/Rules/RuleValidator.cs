@@ -27,7 +27,9 @@ public static partial class RuleValidator
             issues.Add($"Category must be one of: {string.Join(", ", RuleCategories.All)}.");
         if (rule.Detect.Count == 0)
             issues.Add("Every rule needs at least one 'detect' path.");
-        if (rule.Targets.Count == 0)
+        if (rule.Handler is not null && !RuleHandlers.All.Contains(rule.Handler))
+            issues.Add($"Unknown handler '{rule.Handler}'. Known: {string.Join(", ", RuleHandlers.All)}.");
+        if (rule.Targets.Count == 0 && rule.Handler is null)
             issues.Add("Every rule needs at least one target.");
         if (rule.MinAgeHours < 0)
             issues.Add("minAgeHours cannot be negative.");

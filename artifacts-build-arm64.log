@@ -1,0 +1,50 @@
+﻿== win-arm64: app
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Scour.Ipc -> C:\GitHub\scour\src\Scour.Ipc\bin\ARM64\Release\net10.0-windows10.0.26100.0\Scour.Ipc.dll
+  Scour.Core -> C:\GitHub\scour\src\Scour.Core\bin\ARM64\Release\net10.0-windows10.0.26100.0\Scour.Core.dll
+  Scour.App -> C:\GitHub\scour\src\Scour.App\bin\ARM64\Release\net10.0-windows10.0.26100.0\win-arm64\ScourApp.dll
+  Scour.App -> C:\GitHub\scour\artifacts\Scour-1.0.0-win-arm64\
+== win-arm64: Scour.Cli
+  Determining projects to restore...
+  Restored C:\GitHub\scour\src\Scour.Ipc\Scour.Ipc.csproj (in 127 ms).
+  Restored C:\GitHub\scour\src\Scour.Core\Scour.Core.csproj (in 144 ms).
+  Restored C:\GitHub\scour\src\Scour.Cli\Scour.Cli.csproj (in 144 ms).
+  Scour.Ipc -> C:\GitHub\scour\src\Scour.Ipc\bin\Release\net10.0-windows10.0.26100.0\Scour.Ipc.dll
+  Scour.Core -> C:\GitHub\scour\src\Scour.Core\bin\Release\net10.0-windows10.0.26100.0\Scour.Core.dll
+  Scour.Cli -> C:\GitHub\scour\src\Scour.Cli\bin\Release\net10.0-windows10.0.26100.0\win-arm64\scour.dll
+  Scour.Cli -> C:\GitHub\scour\artifacts\Scour-1.0.0-win-arm64\
+== win-arm64: Scour.Elevator
+  Determining projects to restore...
+  Restored C:\GitHub\scour\src\Scour.Elevator\Scour.Elevator.csproj (in 183 ms).
+  2 of 3 projects are up-to-date for restore.
+  Scour.Ipc -> C:\GitHub\scour\src\Scour.Ipc\bin\Release\net10.0-windows10.0.26100.0\Scour.Ipc.dll
+  Scour.Core -> C:\GitHub\scour\src\Scour.Core\bin\Release\net10.0-windows10.0.26100.0\Scour.Core.dll
+  Scour.Elevator -> C:\GitHub\scour\src\Scour.Elevator\bin\Release\net10.0-windows10.0.26100.0\win-arm64\Scour.Elevator.dll
+  Scour.Elevator -> C:\GitHub\scour\artifacts\Scour-1.0.0-win-arm64\
+Zip: C:\GitHub\scour\artifacts\Scour-1.0.0-win-arm64.zip
+== win-arm64: installer
+  Determining projects to restore...
+  Restored C:\GitHub\scour\installer\Scour.Installer.wixproj (in 94 ms).
+  Scour.Installer -> C:\GitHub\scour\artifacts\Scour-1.0.0-win-arm64.msi
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:35.03
+MSI: C:\GitHub\scour\artifacts/Scour-1.0.0-win-arm64.msi
+Get-FileHash : The file 'C:\GitHub\scour\artifacts\SHA256SUMS.txt' cannot be read: The process cannot access the file 
+'C:\GitHub\scour\artifacts\SHA256SUMS.txt' because it is being used by another process.
+At C:\GitHub\scour\build\publish.ps1:79 char:20
++     "{0}  {1}" -f (Get-FileHash $_.FullName -Algorithm SHA256).Hash,  ...
++                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ReadError: (C:\GitHub\scour\artifacts\SHA256SUMS.txt:PSObject) [Write-Error], WriteError 
+   Exception
+    + FullyQualifiedErrorId : FileReadError,Get-FileHash
+ 
+8503BF551796599BD7E21AA67D6225871FDD8C6583B3A81379DAD4CEEA9EB254  Scour-1.0.0-win-arm64.msi
+99409A1356CABFB292FB57BD4CC217A3B47F6B6DC1DC0723BDE06601D48CC664  Scour-1.0.0-win-arm64.zip
+8A80A41B8056E15F36128B2A63C6D186D7203D0C56BC8F33E18F2A38D159064C  Scour-1.0.0-win-x64.msi
+DB302379CE050DABBA6FEA524C661357FAC7453251E83B95B8F06DCC5F1180BB  Scour-1.0.0-win-x64.zip
+  SHA256SUMS.txt

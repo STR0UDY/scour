@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.installer.1.9.0.schema.json
+PackageIdentifier: Scour.Scour
+PackageVersion: {{VERSION}}
+MinimumOSVersion: 10.0.19041.0
+InstallerType: wix
+Scope: machine
+InstallModes:
+  - interactive
+  - silent
+  - silentWithProgress
+UpgradeBehavior: install
+Commands:
+  - scour
+Installers:
+  - Architecture: x64
+    InstallerUrl: https://github.com/{{REPO}}/releases/download/v{{VERSION}}/Scour-{{VERSION}}-win-x64.msi
+    InstallerSha256: {{SHA256_X64}}
+  - Architecture: arm64
+    InstallerUrl: https://github.com/{{REPO}}/releases/download/v{{VERSION}}/Scour-{{VERSION}}-win-arm64.msi
+    InstallerSha256: {{SHA256_ARM64}}
+ManifestType: installer
+ManifestVersion: 1.9.0

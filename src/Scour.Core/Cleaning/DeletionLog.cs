@@ -25,8 +25,7 @@ public sealed class FileDeletionLog : IDeletionLog
     public string? FilePath { get; }
 
     /// <summary><c>%LOCALAPPDATA%\Scour\logs</c>.</summary>
-    public static string DefaultDirectory =>
-        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Scour", "logs");
+    public static string DefaultDirectory => ScourPaths.LogsDirectory;
 
     public static FileDeletionLog Create(string? directory = null)
     {

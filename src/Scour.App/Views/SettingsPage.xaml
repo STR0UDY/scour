@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Scour.App.Views.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:tk="using:CommunityToolkit.WinUI.Controls"
+    xmlns:h="using:Scour.App.Helpers">
+
+    <ScrollViewer>
+        <StackPanel MaxWidth="980" Padding="36,8,36,36" Spacing="4">
+            <TextBlock Text="Settings" Style="{StaticResource ScourPageTitle}" Margin="0,0,0,12" />
+
+            <TextBlock Text="Appearance" Style="{StaticResource BodyStrongTextBlockStyle}" Margin="0,8,0,4" />
+            <tk:SettingsCard Header="Theme" Description="Follow Windows, or always light or dark.">
+                <tk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE790;" /></tk:SettingsCard.HeaderIcon>
+                <ComboBox SelectedIndex="{x:Bind Vm.ThemeIndex, Mode=TwoWay}" MinWidth="160">
+                    <ComboBoxItem Content="Windows default" />
+                    <ComboBoxItem Content="Light" />
+                    <ComboBoxItem Content="Dark" />
+                </ComboBox>
+            </tk:SettingsCard>
+
+            <TextBlock Text="Cleaning" Style="{StaticResource BodyStrongTextBlockStyle}" Margin="0,16,0,4" />
+            <tk:SettingsCard Header="Send cleaned files to the Recycle Bin" Description="Slower, and the space isn't freed until you empty it, but every clean can be undone.">
+                <tk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE74D;" /></tk:SettingsCard.HeaderIcon>
+                <ToggleSwitch IsOn="{x:Bind Vm.UseRecycleBin, Mode=TwoWay}" />
+            </tk:SettingsCard>
+            <tk:SettingsCard Header="Recycle Bin item: only remove things deleted more than this many days ago" Description="0 empties it completely. Applies when the Recycle Bin item is ticked.">
+                <tk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE823;" /></tk:SettingsCard.HeaderIcon>
+                <NumberBox Value="{x:Bind Vm.RecycleBinMinAgeDays, Mode=TwoWay}" Minimum="0" Maximum="365" SpinButtonPlacementMode="Compact" MinWidth="140"
+                           PlaceholderText="days" Header="" />
+            </tk:SettingsCard>
+            <tk:SettingsExpander Header="Exclusions" Description="Files and folders Scour never cleans, whatever a rule says." IsExpanded="True"
+                                 ItemsSource="{x:Bind Vm.Exclusions}">
+                <tk:SettingsExpander.HeaderIcon><FontIcon Glyph="&#xE8F8;" /></tk:SettingsExpander.HeaderIcon>
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <Button Content="Add folder…" Click="OnAddFolderClick" />
+                    <Button Content="Add file…" Click="OnAddFileClick" />
+                </StackPanel>
+                <tk:SettingsExpander.ItemsHeader>
+                    <TextBlock Text="Nothing excluded yet. The disk analyser's 'Never clean this' adds here too." Style="{StaticResource ScourCaption}" Margin="58,8,16,8"
+                               Visibility="{x:Bind NoExclusions(Vm.Exclusions.Count), Mode=OneWay}" />
+                </tk:SettingsExpander.ItemsHeader>
+                <tk:SettingsExpander.ItemTemplate>
+                    <DataTemplate x:DataType="x:String">
+                        <tk:SettingsCard Header="{x:Bind}">
+                            <Button Content="Remove" Click="OnRemoveExclusionClick" Tag="{x:Bind}" />
+                        </tk:SettingsCard>
+                    </DataTemplate>
+                </tk:SettingsExpander.ItemTemplate>
+            </tk:SettingsExpander>
+
+            <TextBlock Text="Rule packs" Style="{StaticResource BodyStrongTextBlockStyle}" Margin="0,16,0,4" />
+            <tk:SettingsCard Header="Built-in rules" Description="{x:Bind Vm.BuiltInRules, Mode=OneWay}">
+                <tk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE8FD;" /></tk:SettingsCard.HeaderIcon>
+            </tk:SettingsCard>
+            <tk:SettingsCard Header="winapp2.ini" Description="{x:Bind Vm.ImportStatus, Mode=OneWay}">
+                <tk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE8B5;" /></tk:SettingsCard.HeaderIcon>
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <Button Content="Remove" Click="OnRemoveWinapp2Click" Visibility="{x:Bind h:Format.Show(Vm.HasImport), Mode=OneWay}" />
+                    <Button Content="Import…" Click="OnImportClick" />
+                </StackPanel>
+            </tk:SettingsCard>
+
+            <TextBlock Text="Scheduled clean" Style="{StaticResource BodyStrongTextBlockStyle}" Margin="0,16,0,4" />
+            <tk:SettingsExpander Header="Clean automatically" Description="{x:Bind Vm.ScheduleStatus, Mode=OneWay}" IsExpanded="{x:Bind Vm.ScheduleEnabled, Mode=OneWay}">
+                <tk:SettingsExpander.HeaderIcon><FontIcon Glyph="&#xE787;" /></tk:SettingsExpander.HeaderIcon>
+                <ToggleSwitch IsOn="{x:Bind Vm.ScheduleEnabled, Mode=TwoWay}" />
+                <tk:SettingsExpander.Items>
+                    <tk:SettingsCard Header="How often">
+                        <ComboBox SelectedIndex="{x:Bind Vm.FrequencyIndex, Mode=TwoWay}" MinWidth="160">
+                            <ComboBoxItem Content="Daily" />
+                            <ComboBoxItem Content="Weekly" />
+                            <ComboBoxItem Content="Monthly" />
+                        </ComboBox>
+                    </tk:SettingsCard>
+                    <tk:SettingsCard Header="Day" Visibility="{x:Bind h:Format.Show(Vm.IsWeekly), Mode=OneWay}">
+                        <ComboBox SelectedIndex="{x:Bind Vm.DayIndex, Mode=TwoWay}" MinWidth="160">
+                            <ComboBoxItem Content="Sunday" />
+                            <ComboBoxItem Content="Monday" />
+                            <ComboBoxItem Content="Tuesday" />
+                            <ComboBoxItem Content="Wednesday" />
+                            <ComboBoxItem Content="Thursday" />
+                            <ComboBoxItem Content="Friday" />
+                            <ComboBoxItem Content="Saturday" />
+                        </ComboBox>
+                    </tk:SettingsCard>
+                    <tk:SettingsCard Header="Time">
+                        <TimePicker Time="{x:Bind Vm.Time, Mode=TwoWay}" ClockIdentifier="24HourClock" />
+                    </tk:SettingsCard>
+                    <tk:SettingsCard Header="What to clean" Description="Scheduled cleans never ask for admin and skip apps that are running.">
+                        <ComboBox ItemsSource="{x:Bind Vm.ProfileNames}" SelectedIndex="{x:Bind Vm.ScheduleProfileIndex, Mode=TwoWay}" MinWidth="160" />
+                    </tk:SettingsCard>
+                </tk:SettingsExpander.Items>
+            </tk:SettingsExpander>
+
+            <TextBlock Text="Updates and logs" Style="{StaticResource BodyStrongTextBlockStyle}" Margin="0,16,0,4" />
+            <tk:SettingsCard Header="Check for updates" Description="Off by default. When on, Scour asks GitHub for the latest release at start-up. Nothing about you or your PC is sent.">
+                <tk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE895;" /></tk:SettingsCard.HeaderIcon>
+                <StackPanel Orientation="Horizontal" Spacing="12">
+                    <TextBlock Text="{x:Bind Vm.UpdateStatus, Mode=OneWay}" VerticalAlignment="Center" Style="{StaticResource ScourCaption}" />
+                    <HyperlinkButton Content="Get it" NavigateUri="{x:Bind UpdateUri(Vm.LatestUrl), Mode=OneWay}" Visibility="{x:Bind h:Format.ShowText(Vm.LatestUrl), Mode=OneWay}" />
+                    <Button Content="Check now" Click="OnCheckNowClick" />
+                    <ToggleSwitch IsOn="{x:Bind Vm.CheckForUpdates, Mode=TwoWay}" />
+                </StackPanel>
+            </tk:SettingsCard>
+            <tk:SettingsCard Header="Clean logs" Description="{x:Bind Vm.LogsFolder}" IsClickEnabled="True" Click="OnLogsClick" ActionIcon="{ui:FontIcon Glyph=&#xE8A7;}"
+                             xmlns:ui="using:CommunityToolkit.WinUI">
+                <tk:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE9F9;" /></tk:SettingsCard.HeaderIcon>
+            </tk:SettingsCard>
+
+            <TextBlock Text="About" Style="{StaticResource BodyStrongTextBlockStyle}" Margin="0,16,0,4" />
+            <tk:SettingsExpander Header="Scour" Description="{x:Bind Vm.Version}">
+                <tk:SettingsExpander.HeaderIcon>
+                    <BitmapIcon UriSource="ms-appx:///Assets/scour.png" ShowAsMonochrome="False" />
+                </tk:SettingsExpander.HeaderIcon>
+                <HyperlinkButton Content="Source code" NavigateUri="{x:Bind RepoUri}" />
+                <tk:SettingsExpander.Items>
+                    <tk:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
+                        <TextBlock TextWrapping="Wrap" Style="{StaticResource ScourSubtle}"
+                                   Text="Free and open source under the GPL-3.0 licence. No telemetry, no ads, no account and no background service. Every cleanable location is a JSON rule you can read in the rules folder, and nothing is deleted that you haven't seen first." />
+                    </tk:SettingsCard>
+                </tk:SettingsExpander.Items>
+            </tk:SettingsExpander>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

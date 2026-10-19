@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="Scour.App.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Scour">
+    <Window.SystemBackdrop>
+        <MicaBackdrop />
+    </Window.SystemBackdrop>
+
+    <Grid x:Name="Root">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Custom title bar: the app draws into it; Windows still provides the caption buttons. -->
+        <Grid x:Name="AppTitleBar" Height="48" Padding="16,0,0,0">
+            <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+                <Image Source="ms-appx:///Assets/scour.png" Width="16" Height="16" />
+                <TextBlock Text="Scour" Style="{StaticResource CaptionTextBlockStyle}" VerticalAlignment="Center" />
+                <Border x:Name="ElevatedBadge" Visibility="Collapsed" Style="{StaticResource ScourBadge}"
+                        Background="{ThemeResource ScourCautionBackgroundBrush}">
+                    <TextBlock Text="Administrator" FontSize="11" Foreground="{ThemeResource ScourCautionBrush}" />
+                </Border>
+            </StackPanel>
+        </Grid>
+
+        <!-- Only ever shown if the user turned on update checks in Settings. -->
+        <InfoBar x:Name="UpdateBar" Grid.Row="1" Severity="Informational" IsOpen="False" Margin="12,0,12,8" Title="A new version of Scour is available">
+            <InfoBar.ActionButton>
+                <HyperlinkButton x:Name="UpdateLink" Content="See what's new" />
+            </InfoBar.ActionButton>
+        </InfoBar>
+
+        <NavigationView x:Name="Nav" Grid.Row="2"
+                        PaneDisplayMode="Left"
+                        IsBackButtonVisible="Collapsed"
+                        IsSettingsVisible="True"
+                        OpenPaneLength="200"
+                        SelectionChanged="OnNavigationSelectionChanged">
+            <NavigationView.MenuItems>
+                <NavigationViewItem Content="Home" Tag="home">
+                    <NavigationViewItem.Icon><FontIcon Glyph="&#xE80F;" /></NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Clean" Tag="clean">
+                    <NavigationViewItem.Icon><FontIcon Glyph="&#xE74D;" /></NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Analyse" Tag="analyse">
+                    <NavigationViewItem.Icon><FontIcon Glyph="&#xEB05;" /></NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Startup" Tag="startup">
+                    <NavigationViewItem.Icon><FontIcon Glyph="&#xE7E8;" /></NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Apps" Tag="apps">
+                    <NavigationViewItem.Icon><FontIcon Glyph="&#xE71D;" /></NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
+
+            <Frame x:Name="ContentFrame" />
+        </NavigationView>
+    </Grid>
+</Window>

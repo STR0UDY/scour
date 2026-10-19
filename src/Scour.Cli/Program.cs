@@ -16,6 +16,9 @@ var root = new RootCommand("Scour: a Windows cleaner that never deletes anything
     ScanCommand.Create(rulesDir),
     CleanCommand.Create(rulesDir),
     RulesCommand.Create(rulesDir),
+    StartupCommand.Create(),
+    AnalyseCommand.Create(),
+    AppsCommand.Create(),
 };
 
 return await root.Parse(args).InvokeAsync();

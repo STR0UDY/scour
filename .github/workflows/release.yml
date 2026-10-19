@@ -1,0 +1,75 @@
+name: Release
+
+# Push a tag like v1.0.0 to build, sign (when the secrets exist) and publish a GitHub release.
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    env:
+      # Secrets can't appear in step conditions directly, so expose "is signing configured?".
+      HAS_SIGNING: ${{ secrets.TRUSTED_SIGNING_METADATA != '' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Check the tag matches the version
+        shell: pwsh
+        run: |
+          $version = ([xml](Get-Content Directory.Build.props)).Project.PropertyGroup.Version | Where-Object { $_ } | Select-Object -First 1
+          if ("v$version" -ne "${{ github.ref_name }}") { throw "Tag ${{ github.ref_name }} doesn't match Version $version in Directory.Build.props" }
+
+      - name: Test
+        run: dotnet test Scour.slnx -c Release
+
+      # Unsigned builds work, but SmartScreen warns loudly about them; set these secrets to sign.
+      - name: Set up signing
+        if: env.HAS_SIGNING == 'true'
+        shell: pwsh
+        run: |
+          '${{ secrets.TRUSTED_SIGNING_METADATA }}' | Set-Content "$env:RUNNER_TEMP/metadata.json"
+          nuget install Microsoft.Trusted.Signing.Client -OutputDirectory "$env:RUNNER_TEMP/ts"
+          $dlib = Get-ChildItem "$env:RUNNER_TEMP/ts" -Recurse -Filter Azure.CodeSigning.Dlib.dll | Where-Object FullName -match 'x64' | Select-Object -First 1
+          "SCOUR_TRUSTED_SIGNING_METADATA=$env:RUNNER_TEMP/metadata.json" >> $env:GITHUB_ENV
+          "SCOUR_TRUSTED_SIGNING_DLIB=$($dlib.FullName)" >> $env:GITHUB_ENV
+        env:
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+
+      - name: Build release
+        shell: pwsh
+        run: |
+          $sign = [bool]$env:SCOUR_TRUSTED_SIGNING_METADATA
+          ./build/publish.ps1 -Sign:$sign
+        env:
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+
+      - name: Fill in winget manifests
+        shell: pwsh
+        run: ./packaging/winget/update-manifests.ps1 -Tag "${{ github.ref_name }}" -Repository "${{ github.repository }}"
+
+      - name: Publish the release
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: true
+          generate_release_notes: true
+          files: |
+            artifacts/*.zip
+            artifacts/*.msi
+            artifacts/SHA256SUMS.txt
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: winget-manifests
+          path: packaging/winget/out
