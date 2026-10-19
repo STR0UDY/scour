@@ -17,7 +17,7 @@
 
     <Icon Id="ScourIcon" SourceFile="..\src\Scour.App\Assets\scour.ico" />
     <Property Id="ARPPRODUCTICON" Value="ScourIcon" />
-    <Property Id="ARPURLINFOABOUT" Value="https://github.com/Mat2k/scour" />
+    <Property Id="ARPURLINFOABOUT" Value="https://github.com/STR0UDY/scour" />
     <Property Id="ARPCOMMENTS" Value="Free, open-source Windows cleaner. Nothing is deleted that you haven't seen first." />
 
     <StandardDirectory Id="ProgramFiles6432Folder">

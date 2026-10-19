@@ -6,7 +6,7 @@
 #>
 param(
     [Parameter(Mandatory)] [string]$Tag,
-    [string]$Repository = 'Mat2k/scour'
+    [string]$Repository = 'STR0UDY/scour'
 )
 
 $ErrorActionPreference = 'Stop'

@@ -30,6 +30,16 @@ public partial class App : Application
         _window = new MainWindow();
         _window.Closed += async (_, _) => await AppServices.ShutdownAsync();
         _window.Activate();
+
+        // "ScourApp.exe --analyse <folder>" opens straight into the analyser, e.g. from a shortcut.
+        var argv = Environment.GetCommandLineArgs();
+        var at = Array.FindIndex(argv, a => a is "--analyse" or "--analyze");
+        if (at >= 0 && at + 1 < argv.Length && Directory.Exists(argv[at + 1]))
+        {
+            ViewModels.AnalyseViewModel.Instance.CustomFolder = Path.GetFullPath(argv[at + 1]);
+            _window.NavigateTo("analyse");
+            _ = ViewModels.AnalyseViewModel.Instance.AnalyseAsync();
+        }
     }
 
     public static void LogCrash(Exception? ex)

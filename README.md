@@ -1,21 +1,59 @@
-<p align="center"><img src="docs/assets/icon.png" width="96" alt=""></p>
+<p align="center"><img src="docs/assets/icon.png" width="96" alt="Scour icon"></p>
 
 <h1 align="center">Scour</h1>
 
-<p align="center">A free, open-source Windows cleaner: the tool CCleaner used to be, minus the bloat.<br>
-It reclaims disk space, shows where the space went and tidies startup, and it never deletes anything you haven't seen first.</p>
+<p align="center"><b>A free, open-source Windows cleaner: the tool CCleaner used to be, minus the bloat.</b><br>
+It frees disk space, shows where the space went and tidies what starts with Windows,<br>and it never deletes anything you haven't seen first.</p>
+
+<p align="center">
+  <a href="https://github.com/STR0UDY/scour/releases/latest"><b>Download for Windows</b></a> ·
+  <a href="#install">Install</a> ·
+  <a href="#how-a-clean-stays-safe">Is it safe?</a> ·
+  <a href="CONTRIBUTING.md">Add an app</a>
+</p>
+
+<p align="center"><img src="docs/screenshots/home.png" width="860" alt="Scour's Home page after a scan, showing 5 GB reclaimable broken down by category"></p>
 
 ---
 
-## What it does
+## What is it?
 
-| | |
-| --- | --- |
-| **Clean** | Temp files, Windows Update and Delivery Optimisation caches, crash dumps, error reports, old logs, thumbnail and icon caches, GPU shader caches, browser caches (Chrome, Edge, Brave, Opera, Firefox), app caches (Discord, Spotify, Teams, Slack, VS Code), launcher caches (Steam, Epic, Battle.net, FiveM), dev caches (npm, Yarn, NuGet, pip, Gradle, Cargo) and the Recycle Bin. |
-| **Analyse** | A treemap of any drive or folder. With admin it reads the NTFS master file table directly (seconds for a whole drive); without, it walks folders. Drill down, see size on disk, break it down by file type, open in Explorer, move to the Recycle Bin. |
-| **Startup** | Run keys, Startup folders, logon/boot scheduled tasks and auto-start services, with publisher and signature checks and broken entries flagged. Switch them off the way Task Manager does, so it's reversible. |
-| **Apps** | Every Win32 and Store app. Runs the app's own uninstaller, then finds what it left behind and shows you before removing anything. |
-| **CLI** | `scour scan`, `scour clean --dry-run`, `scour analyse C:` and more, on the same engine. |
+Scour is a small Windows 10/11 app that finds the junk your PC piles up (temp files, caches, crash dumps, old logs), shows you exactly what it found and removes only what you tick. There are no ads, upsells, accounts, telemetry or background services, and no registry "cleaning" that breaks things.
+
+It does four things:
+
+### 1. Clean
+
+Scan, review, clean. Every item says what it is and how much it frees, and you can expand it to see the files. Risky items such as cookies, history and the Recycle Bin are off until you turn them on. Anything that needs admin waits behind a single **Allow** button.
+
+<p align="center"><img src="docs/screenshots/clean.png" width="860" alt="The Clean page: rules grouped by category, each with a tick box, size, file count and a short description"></p>
+
+Covers Windows temp files, Windows Update and Delivery Optimisation caches, crash dumps, error reports, old logs, thumbnail and icon caches, and GPU shader caches. It also covers browsers (Chrome, Edge, Brave, Opera, Firefox), apps (Discord, Spotify, Teams, Slack, VS Code), game launchers (Steam, Epic, Battle.net, FiveM), developer caches (npm, Yarn, NuGet, pip, Gradle, Cargo) and the Recycle Bin.
+
+### 2. Analyse
+
+See where the space went. Scour draws any drive or folder as a treemap, where the bigger the block, the bigger the folder. Click to drill in, and right-click to open in Explorer or move something to the Recycle Bin. With fast scan it reads the drive's file table directly, so a whole drive takes seconds.
+
+<p align="center"><img src="docs/screenshots/analyse.png" width="860" alt="The Analyse page: a coloured treemap of a folder next to a sortable list of its largest subfolders"></p>
+
+### 3. Startup
+
+Everything that starts with Windows, with a verified publisher for each: apps, scheduled tasks and services. Entries that point at a program that no longer exists are flagged. Switching things off is reversible, just like Task Manager, and Microsoft items are hidden by default so you can't break Windows by accident.
+
+<p align="center"><img src="docs/screenshots/startup.png" width="860" alt="The Startup page listing services with their publisher, signature status and an on/off switch"></p>
+
+### 4. Apps
+
+Every installed app, desktop and Store. **Uninstall** runs the app's own uninstaller, then Scour looks for leftover folders and shortcuts and shows them to you, all unticked.
+
+<p align="center"><img src="docs/screenshots/apps.png" width="860" alt="The Apps page: a searchable list of installed apps with size, install date and an Uninstall button"></p>
+
+And it's all scriptable: `scour scan`, `scour clean --dry-run`, `scour analyse C:` and more, from any terminal.
+
+<details>
+<summary>Settings</summary>
+<p align="center"><img src="docs/screenshots/settings.png" width="860" alt="The Settings page: theme, Recycle Bin mode, exclusions and rule packs"></p>
+</details>
 
 ## Principles
 
@@ -29,13 +67,15 @@ Not included, on purpose: a registry cleaner, RAM "optimisers", driver updaters,
 
 ## Install
 
-Download the MSI for your PC (x64 or ARM64) from [Releases](https://github.com/Mat2k/scour/releases), or:
+1. Go to [Releases](https://github.com/STR0UDY/scour/releases) and download the MSI for your PC: `win-x64` for most PCs, `win-arm64` for Snapdragon/ARM laptops.
+2. Run it. Scour appears in the Start menu, and `scour` works in any terminal.
+3. Open Scour and press **Scan**. Nothing is deleted until you press **Clean** and confirm.
 
-```bash
-winget install Scour.Scour
-```
+Prefer not to install? Each release also has a portable `.zip`: unzip it anywhere and run `ScourApp.exe`.
 
-The installer adds Scour to the Start menu and puts `scour` on your PATH. A portable zip is also on the releases page.
+Requires Windows 10 22H2 or Windows 11. Everything Scour needs is bundled, so there's nothing else to install.
+
+> Early releases aren't code-signed yet, so Windows SmartScreen may say it "protected your PC". Choose **More info → Run anyway**, or build it yourself from source (below).
 
 ## Using the CLI
 

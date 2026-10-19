@@ -17,7 +17,7 @@
     <Copyright>Copyright © Scour contributors</Copyright>
     <Version>1.0.0</Version>
     <!-- Where update checks look. Change if the repository moves. -->
-    <ScourRepository>Mat2k/scour</ScourRepository>
+    <ScourRepository>STR0UDY/scour</ScourRepository>
   </PropertyGroup>
 
   <ItemGroup>
